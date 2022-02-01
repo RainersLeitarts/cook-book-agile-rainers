@@ -1,0 +1,19 @@
+nav{
+    margin: 0;
+    height: 100px;
+    background-color: #58249c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.title{
+    font-size: 3rem;
+    color: white;
+}
+
+.items{
+    display: flex;
+}
+

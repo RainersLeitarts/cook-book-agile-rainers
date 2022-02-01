@@ -1,7 +1,9 @@
 import './Create.css'
 
 const Create = () => {
-  return <div></div>;
+  return <div>
+    Create
+  </div>;
 }
 
 export default Create
