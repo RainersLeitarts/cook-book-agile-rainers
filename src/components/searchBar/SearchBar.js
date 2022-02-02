@@ -3,7 +3,7 @@ import './SearchBar.css'
 
 const SearchBar = () => {
   return <div>
-    <label>Search: </label>
+    <label className='search'>Search: </label>
     <input className='searchbox' type='text' ></input>
     <Link to='/search'><button className='search-btn'>Search</button></Link>
   </div>;

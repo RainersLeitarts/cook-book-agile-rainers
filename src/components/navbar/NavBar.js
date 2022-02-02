@@ -4,7 +4,7 @@ import SearchBar from '../searchBar/SearchBar';
 
 const NavBar = () => {
   return <nav>
-    <h1 className='title'>CookBook</h1>
+    <Link to='/'><h1 className='title'>CookBook</h1></Link>
     
     <div className='items'>
       <SearchBar/>

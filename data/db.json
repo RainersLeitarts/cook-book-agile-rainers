@@ -57,6 +57,15 @@
       "method": "visu samet katlā un vāra",
       "cookingTime": "7 minutes",
       "id": "FdqZKBL"
+    },
+    {
+      "id": "43",
+      "title": "tHIS",
+      "ingredients": [
+        "is"
+      ],
+      "method": "a",
+      "cookingTime": "test"
     }
   ]
 }
