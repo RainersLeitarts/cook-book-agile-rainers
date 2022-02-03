@@ -46,7 +46,7 @@ const Create = () => {
       title: state.title,
       ingredients: [state.ingredients],
       method: state.method,
-      cookingTime: state.time
+      cookingTime: state.time + ' minutes'
     }).finally(()=>{
       navigate('/')
     })
