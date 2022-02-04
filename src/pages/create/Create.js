@@ -86,7 +86,6 @@ const Create = () => {
       <div className='ingredients-wrapper'>
         <input className='ingredients-input' type='text' value={state.ingredient} onChange={(e) => {dispatch({type: 'ingredient', e: e})}}></input>
         <button onClick={addIngredientHandler} className='add-btn'>add</button>
-        
       </div>
       <p>Current ingredients: {state.ingredients}</p>
       <label>Recipe method:</label>

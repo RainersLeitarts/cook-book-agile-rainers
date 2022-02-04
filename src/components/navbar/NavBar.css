@@ -21,6 +21,9 @@ nav{
     color: white;
     cursor: pointer;
     float: left;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
 }
 
 .items{

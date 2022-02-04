@@ -10,6 +10,7 @@ input{
 .searchbox{
     padding: 5px;
     border: 1px solid white;
+    border-radius: 3px 0px 0px 3px;
 }
 
 .search-btn{
