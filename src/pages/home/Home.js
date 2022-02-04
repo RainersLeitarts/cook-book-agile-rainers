@@ -5,7 +5,7 @@ import './Home.css'
 const Home = () => {
   const {data, loading, error} = useFetch('http://localhost:3003/recipes')
 
-    return <div className='home'>
+    return <div className='wrapper'>
       {loading && <h1 className='loading'>Loading...</h1>}
       {error && <h1 className='error'>error</h1>}
       {data && <RecipesList data={data}/>}

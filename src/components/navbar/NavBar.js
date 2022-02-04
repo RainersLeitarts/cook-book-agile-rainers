@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import './NavBar.css'
 import SearchBar from '../searchBar/SearchBar';
 
 const NavBar = () => {
+  const navigate = useNavigate()
+
   return <nav>
-    <Link to='/'><h1 className='title'>CookBook</h1></Link>
-    
-    <div className='items'>
-      <SearchBar/>
-      <Link to='/create'><button>create recipe</button></Link>
-    </div>
-  </nav>;
+      <h1 className='title' onClick={() => navigate('/')}>CookBook</h1>
+        <SearchBar/>
+        <button onClick={() => navigate('/create')}>create recipe</button>
+    </nav>;
 };
 
 export default NavBar;

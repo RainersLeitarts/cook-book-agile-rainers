@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './SearchBar.css'
 
 const SearchBar = () => {
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('')
 
   const inputHandler = (e) =>{

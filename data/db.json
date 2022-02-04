@@ -59,49 +59,11 @@
       "id": "FdqZKBL"
     },
     {
-      "id": "43",
-      "title": "tHIS",
-      "ingredients": [
-        "is"
-      ],
-      "method": "a",
-      "cookingTime": "test"
-    },
-    {
-      "id": "5265",
-      "title": "Some bussin fries",
-      "ingredients": [
-        "fries, oil"
-      ],
-      "method": "cook the fries",
-      "cookingTime": "15 min"
-    },
-    {
-      "id": "9875",
-      "title": "veri",
-      "ingredients": [
-        "amazing"
-      ],
-      "method": "recipe",
-      "cookingTime": "21"
-    },
-    {
-      "id": "2409",
-      "title": "qweqwe",
-      "ingredients": [
-        "qweqwe"
-      ],
-      "method": "qweqwe",
-      "cookingTime": "23minutes"
-    },
-    {
-      "id": "8792",
-      "title": "asdasd",
-      "ingredients": [
-        "asdasd"
-      ],
-      "method": "asdasdasda",
-      "cookingTime": "21 minutes"
+      "id": "1881",
+      "title": "Mushroom Polenta",
+      "ingredients": "1/4 water, 1 1/2 pounds mushrooms (mix of cremini and white button), 3 tablespoons olive oil, divided, 1 1/2 teaspoons kosher salt, divided, plus more to taste, 1/8 teaspoon freshly ground black pepper, plus more to taste",
+      "method": " Prepare the mushrooms:  Gently wipe the mushroom caps clean with a dry paper towel. Trim the bottom of stems and cut the mushrooms into quarters if large and halves if small. The cut pieces should be about the same size.  ",
+      "cookingTime": "50 minutes"
     }
   ]
 }

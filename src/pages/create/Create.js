@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useReducer, useState } from 'react'
 import axios from 'axios'
 import './Create.css'
 import { useNavigate } from 'react-router-dom'
@@ -11,10 +11,30 @@ const reducer = (state, action) =>{
         ...state, 
         title: action.e.target.value
       }
-    case 'ingredients':
+    case 'ingredient':
       return {
         ...state, 
-        ingredients: action.e.target.value
+        ingredient: action.e.target.value
+      }
+    case 'ingredients':
+      if (state.ingredient.replace(/\s+/g, ' ').trim() === ''){
+        return{
+          ...state,
+          ingredient: ''
+        }
+      }
+      if (state.ingredients === '') {
+        return{
+          ...state, 
+          ingredients: state.ingredients + state.ingredient,
+          ingredient: ''
+        }
+      }else{
+        return {
+          ...state, 
+          ingredients: state.ingredients + ', ' + state.ingredient,
+          ingredient: ''
+        }
       }
     case 'method':
       return {
@@ -30,21 +50,19 @@ const reducer = (state, action) =>{
 }
 
 const Create = () => {
-  const [state, dispatch] = useReducer(reducer, { title: '', ingredients: [], method: '', time: '' })
+  const [state, dispatch] = useReducer(reducer, { title: '', ingredients: '', ingredient: '', method: '', time: '' })
+
   const navigate = useNavigate()
 
-  console.log(state.title);
-  console.log(state.ingredients);
-  console.log(state.method);
-  console.log(state.time);
-
+  console.log(state);
+  
   const handleSubmit = (e) =>{
     e.preventDefault()
 
     axios.post('http://localhost:3003/recipes', {
       id: Math.floor(Math.random() * 10000).toString(),
       title: state.title,
-      ingredients: [state.ingredients],
+      ingredients: state.ingredients,
       method: state.method,
       cookingTime: state.time + ' minutes'
     }).finally(()=>{
@@ -52,13 +70,22 @@ const Create = () => {
     })
   }
 
+  const addIngredientHandler = (e) =>{
+    e.preventDefault()
+    dispatch({type: 'ingredients'})
+  }
+
+
+
   return <div className='create'>
     <h2>Add a new recipe</h2>
     <form className='input-form' onSubmit={handleSubmit}>
       <label>Recipe title:</label>
       <input className='title-input' type='text' onChange={(e) => {dispatch({type: 'title', e: e})}}></input>
       <label>Recipe ingredients:</label>
-      <input className='ingredients-input' type='text' onChange={(e) => {dispatch({type: 'ingredients', e: e})}}></input>
+      <input className='ingredients-input' type='text' value={state.ingredient} onChange={(e) => {dispatch({type: 'ingredient', e: e})}}></input>
+      <button onClick={addIngredientHandler}>add</button>
+      <p>{state.ingredients}</p>
       <label>Recipe method:</label>
       <input className='method-input' type='text' onChange={(e) => {dispatch({type: 'method', e: e})}}></input>
       <label>Cooking time (in minutes):</label>

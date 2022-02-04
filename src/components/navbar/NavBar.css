@@ -5,15 +5,17 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem;
 }
 
 .title{
     font-size: 3rem;
     color: white;
+    cursor: pointer;
+    float: left;
 }
 
 .items{
     display: flex;
+    width: 100%;
 }
 

@@ -9,7 +9,7 @@ const Search = () => {
   const {data, loading, error} = useFetch(`http://localhost:3003/recipes?q=${search.get('q')}`)
   console.log(data);
 
-  return <div className='home'>
+  return <div className='wrapper'>
       {loading && <h1 className='loading'>Loading...</h1>}
       {error && <h1 className='error'>error</h1>}
       {data && data.length === 0 && <h1 className='noData'>No recipes found...</h1>}
