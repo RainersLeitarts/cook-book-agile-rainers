@@ -6,9 +6,63 @@
 }
 
 .input-form{
+    width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.input-form input{
+    width: 400px;
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.input-form textarea{
+    width: 400px;
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+.input-form label{
+    align-self: flex-start;
+    margin-bottom: 5px;
+}
+
+.input-form p{
+    margin: 0;
+    margin-bottom: 15px;
+    
+    align-self: flex-start;
+}
+
+.submit-btn{
+    background-color: #58249c;
+    color: white;
+    font-size: 18px;
+    padding: 9px 20px 9px 20px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+.add-btn{
+    background-color: #58249c;
+    color: white;
+    font-size: 14px;
+    padding: 2px 15px 2px 15px;
+    border-radius: 0px 5px 5px 0px;
+    border: 1px solid gray;
+    cursor: pointer;
+    height: 28px;
+}
+
+.ingredients-wrapper{
+    display: flex;
+    width: 415px;
 }
 

@@ -83,14 +83,17 @@ const Create = () => {
       <label>Recipe title:</label>
       <input className='title-input' type='text' onChange={(e) => {dispatch({type: 'title', e: e})}}></input>
       <label>Recipe ingredients:</label>
-      <input className='ingredients-input' type='text' value={state.ingredient} onChange={(e) => {dispatch({type: 'ingredient', e: e})}}></input>
-      <button onClick={addIngredientHandler}>add</button>
-      <p>{state.ingredients}</p>
+      <div className='ingredients-wrapper'>
+        <input className='ingredients-input' type='text' value={state.ingredient} onChange={(e) => {dispatch({type: 'ingredient', e: e})}}></input>
+        <button onClick={addIngredientHandler} className='add-btn'>add</button>
+        
+      </div>
+      <p>Current ingredients: {state.ingredients}</p>
       <label>Recipe method:</label>
-      <input className='method-input' type='text' onChange={(e) => {dispatch({type: 'method', e: e})}}></input>
+      <textarea className='method-input' type='text' onChange={(e) => {dispatch({type: 'method', e: e})}}></textarea>
       <label>Cooking time (in minutes):</label>
       <input className='time-input' type='text' onChange={(e) => {dispatch({type: 'time', e: e})}}></input>
-      <button type='submit'>submit</button>
+      <button type='submit' className='submit-btn'>submit</button>
     </form>
   </div>;
 }
