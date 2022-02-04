@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './RecipesList.css'
 
 const RecipesList = ({data}) => {
+  const navigator = useNavigate()
+
   return <div className='page-wrapper'>
   {data?.map(recipe=>{
     return <div key={recipe.id} className='recipe-card'>
         <h1 className='recipe-title'>{recipe.title}</h1>
         <h3 className='cooking-time'>{`${recipe.cookingTime} to make.`}</h3>
         <p className='cooking-method'>{recipe.method}</p>
-        <Link to={`/recipe/${recipe.id}`}><button>Cook This</button></Link>
+        <button className='view-btn' onClick={()=>{navigator(`/recipe/${recipe.id}`)}}>Cook This</button>
       </div>
   })}
 </div>;
