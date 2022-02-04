@@ -15,6 +15,11 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 20px;
     border-radius: 5px;
+    transition: all 0.1s ease-out;
+}
+
+.recipe-card:hover{
+    transform: rotate(3deg);
 }
 
 .recipe-title{

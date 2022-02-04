@@ -10,7 +10,7 @@ const NavBar = () => {
       <h1 className='title' onClick={() => navigate('/')}>CookBook</h1>
         <div className='items'>
           <SearchBar/>
-          <button onClick={() => navigate('/create')}>create recipe</button>
+          <button onClick={() => navigate('/create')} className='create-btn'>create recipe</button>
           </div>
         </div>
     </nav>;

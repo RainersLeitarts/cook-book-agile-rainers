@@ -6,3 +6,19 @@ input{
 .search{
     color: white;
 }
+
+.searchbox{
+    padding: 5px;
+    border: 1px solid white;
+}
+
+.search-btn{
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 0px 3px 3px 0px;
+    color:white;
+    font-size: 13px;
+    cursor: pointer;
+    
+}

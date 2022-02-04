@@ -32,3 +32,14 @@ nav{
     justify-content: flex-end;
 }
 
+.create-btn{
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 3px;
+    color:white;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
