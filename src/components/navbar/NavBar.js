@@ -6,9 +6,13 @@ const NavBar = () => {
   const navigate = useNavigate()
 
   return <nav>
+      <div className='nav-wrapper'>
       <h1 className='title' onClick={() => navigate('/')}>CookBook</h1>
-        <SearchBar/>
-        <button onClick={() => navigate('/create')}>create recipe</button>
+        <div className='items'>
+          <SearchBar/>
+          <button onClick={() => navigate('/create')}>create recipe</button>
+          </div>
+        </div>
     </nav>;
 };
 

@@ -1,5 +1,14 @@
 nav{
-    margin: 0;
+    height: 100px;
+    background-color: #58249c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-wrapper{
+    width: 1200px;
+    margin: auto;
     height: 100px;
     background-color: #58249c;
     display: flex;
@@ -15,7 +24,11 @@ nav{
 }
 
 .items{
+    align-items: flex-end;
+    width: 1200px;
+    margin: auto;
     display: flex;
     width: 100%;
+    justify-content: flex-end;
 }
 
