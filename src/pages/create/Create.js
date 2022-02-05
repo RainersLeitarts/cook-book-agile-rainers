@@ -104,9 +104,9 @@ const Create = () => {
 
     axios.post('http://localhost:3003/recipes', {
       id: Math.floor(Math.random() * 10000).toString(),
-      title: state.title,
+      title: state.title.trim(),
       ingredients: state.ingredients,
-      method: state.method,
+      method: state.method.trim(),
       cookingTime: state.time + ' minutes'
     }).finally(()=>{
       navigate('/')
