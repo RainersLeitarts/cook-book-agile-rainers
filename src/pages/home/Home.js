@@ -3,7 +3,7 @@ import useFetch from '../../hooks/useFetch';
 import './Home.css'
 
 const Home = () => {
-  const {data, loading, error} = useFetch('http://localhost:3003/recipes')
+  const {data, loading, error} = useFetch('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes')
 
     return <div className='wrapper'>
       {loading && <h1 className='loading'>Loading...</h1>}

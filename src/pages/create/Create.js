@@ -4,89 +4,89 @@ import './Create.css'
 import { useNavigate } from 'react-router-dom'
 
 
-const reducer = (state, action) =>{
-  switch(action.type){
+const reducer = (state, action) => {
+  switch (action.type) {
     case 'title':
       let title = action.e.target.value;
-      title = title.replace(/ +(?= )/g,'');
+      title = title.replace(/ +(?= )/g, '');
 
-      if(state.title === '' && action.e.target.value === ' ') {
-        return{
+      if (state.title === '' && action.e.target.value === ' ') {
+        return {
           ...state,
           title: ''
         }
       }
 
       return {
-        ...state, 
+        ...state,
         title: title
       }
     case 'ingredient':
       let ingredient = action.e.target.value;
-      ingredient = ingredient.replace(/ +(?= )/g,'');
+      ingredient = ingredient.replace(/ +(?= )/g, '');
 
-      if(state.ingredient === '' && action.e.target.value === ' ') {
-        return{
+      if (state.ingredient === '' && action.e.target.value === ' ') {
+        return {
           ...state,
           ingredient: ''
         }
       }
 
       return {
-        ...state, 
+        ...state,
         ingredient: ingredient
       }
     case 'ingredients':
-      if (state.ingredient.replace(/\s+/g, ' ').trim() === ''){
-        return{
+      if (state.ingredient.replace(/\s+/g, ' ').trim() === '') {
+        return {
           ...state,
           ingredient: ''
         }
       }
       if (state.ingredients === '') {
-        return{
-          ...state, 
+        return {
+          ...state,
           ingredients: state.ingredients + state.ingredient.trim(),
           ingredient: ''
         }
-      }else{
+      } else {
         return {
-          ...state, 
+          ...state,
           ingredients: state.ingredients + ', ' + state.ingredient.trim(),
           ingredient: ''
         }
       }
     case 'method':
       let method = action.e.target.value;
-      console.log('method: '+method);
-      method = method.replace(/ +(?= )/g,'');
+      console.log('method: ' + method);
+      method = method.replace(/ +(?= )/g, '');
       console.log(method);
 
-      if(state.method === '' && action.e.target.value === ' ') {
-        return{
+      if (state.method === '' && action.e.target.value === ' ') {
+        return {
           ...state,
           method: ''
         }
       }
 
       return {
-        ...state, 
+        ...state,
         method: method
       }
     case 'time':
       let time = action.e.target.value
-      time = time.replace(/ +(?= )/g,'');
-      time = time.replace(/\D/g,'');
+      time = time.replace(/ +(?= )/g, '');
+      time = time.replace(/\D/g, '');
 
-      if(state.time === '' && action.e.target.value === ' ') {
-        return{
+      if (state.time === '' && action.e.target.value === ' ') {
+        return {
           ...state,
           time: ''
         }
       }
 
       return {
-        ...state, 
+        ...state,
         time: time
       }
   }
@@ -98,24 +98,34 @@ const Create = () => {
   const navigate = useNavigate()
 
   console.log(state);
-  
-  const handleSubmit = (e) =>{
-    e.preventDefault()
 
-    axios.post('http://localhost:3003/recipes', {
-      id: Math.floor(Math.random() * 10000).toString(),
-      title: state.title.trim(),
-      ingredients: state.ingredients,
-      method: state.method.trim(),
-      cookingTime: state.time + ' minutes'
-    }).finally(()=>{
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    let search = []
+    state.title.trim().split(' ').map(element=>{
+      search.push({stringValue: element.toLowerCase()})
+    })
+
+    state.method.trim().split(' ').map(element=>{
+      search.push({stringValue: element.toLowerCase()})
+    })
+
+    axios.post('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes', {
+      fields: {
+        title: {stringValue: state.title.trim()},
+        ingredients: {stringValue: state.ingredients},
+        method: {stringValue: state.method.trim()},
+        cookingTime: {stringValue: state.time + ' minutes'},
+        search: {arrayValue: {values:[search]}}
+      }
+    }).finally(() => {
       navigate('/')
     })
   }
 
-  const addIngredientHandler = (e) =>{
+  const addIngredientHandler = (e) => {
     e.preventDefault()
-    dispatch({type: 'ingredients'})
+    dispatch({ type: 'ingredients' })
   }
 
 
@@ -124,17 +134,17 @@ const Create = () => {
     <h2>Add a new recipe</h2>
     <form className='input-form' onSubmit={handleSubmit}>
       <label>Recipe title:</label>
-      <input className='title-input' type='text' value={state.title} onChange={(e) => {dispatch({type: 'title', e: e})}}></input>
+      <input className='title-input' type='text' value={state.title} onChange={(e) => { dispatch({ type: 'title', e: e }) }}></input>
       <label>Recipe ingredients:</label>
       <div className='ingredients-wrapper'>
-        <input className='ingredients-input' type='text' value={state.ingredient} onChange={(e) => {dispatch({type: 'ingredient', e: e})}}></input>
+        <input className='ingredients-input' type='text' value={state.ingredient} onChange={(e) => { dispatch({ type: 'ingredient', e: e }) }}></input>
         <button onClick={addIngredientHandler} className='add-btn'>add</button>
       </div>
       <p>Current ingredients: {state.ingredients}</p>
       <label>Recipe method:</label>
-      <textarea className='method-input' type='text' value={state.method} onChange={(e) => {dispatch({type: 'method', e: e})}}></textarea>
+      <textarea className='method-input' type='text' value={state.method} onChange={(e) => { dispatch({ type: 'method', e: e }) }}></textarea>
       <label>Cooking time (in minutes):</label>
-      <input className='time-input' type='numbers' value={state.time} onChange={(e) => {dispatch({type: 'time', e: e})}}></input>
+      <input className='time-input' type='numbers' value={state.time} onChange={(e) => { dispatch({ type: 'time', e: e }) }}></input>
       <button type='submit' className='submit-btn'>submit</button>
     </form>
   </div>;

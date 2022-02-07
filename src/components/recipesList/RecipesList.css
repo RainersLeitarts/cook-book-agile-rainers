@@ -26,6 +26,10 @@
     margin: 0;
     padding: 0;
     color: #555555;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical
 }
 
 .cooking-time{
