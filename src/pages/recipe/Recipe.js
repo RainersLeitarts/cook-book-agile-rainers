@@ -5,14 +5,15 @@ import './Recipe.css'
 const Recipe = () => {
   let { id } = useParams();
 
-  const { data, loading, error } = useFetch(`http://localhost:3003/recipes/${id}`)
+  const { data, loading, error } = useFetch(id)
+  
 
   const recipeCard = ()=> {
     return <div className='single-recipe-card'>
-      <h1 className='recipe-title'>{data.title}</h1>
-      <h3 className='ingredients'>{data.ingredients}</h3>
-      <h3 className='cooking-time'>{`${data.cookingTime} to make.`}</h3>
-      <p className='cooking-method'>{data.method}</p>
+      <h1 className='recipe-title'>{data[0].title}</h1>
+      <h3 className='ingredients'>{data[0].ingredients}</h3>
+      <h3 className='cooking-time'>{`${data[0].cookingTime} to make.`}</h3>
+      <p className='cooking-method'>{data[0].method}</p>
     </div>
   }
 

@@ -2,6 +2,8 @@ import { useReducer, useState } from 'react'
 import axios from 'axios'
 import './Create.css'
 import { useNavigate } from 'react-router-dom'
+import { db } from '../../firebase-config'
+import { collection, addDoc } from 'firebase/firestore'
 
 
 const reducer = (state, action) =>{
@@ -94,16 +96,14 @@ const reducer = (state, action) =>{
 
 const Create = () => {
   const [state, dispatch] = useReducer(reducer, { title: '', ingredients: '', ingredient: '', method: '', time: '' })
+  const recipesCollectionRef = collection(db, 'recipes')
 
   const navigate = useNavigate()
-
-  console.log(state);
   
   const handleSubmit = (e) =>{
     e.preventDefault()
 
-    axios.post('http://localhost:3003/recipes', {
-      id: Math.floor(Math.random() * 10000).toString(),
+    addDoc(recipesCollectionRef, {
       title: state.title.trim(),
       ingredients: state.ingredients,
       method: state.method.trim(),

@@ -3,7 +3,7 @@ import useFetch from '../../hooks/useFetch';
 import './Home.css'
 
 const Home = () => {
-  const {data, loading, error} = useFetch('http://localhost:3003/recipes')
+  const {data, loading, error} = useFetch()
 
     return <div className='wrapper'>
       {loading && <h1 className='loading'>Loading...</h1>}
