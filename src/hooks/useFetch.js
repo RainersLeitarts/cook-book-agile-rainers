@@ -29,12 +29,11 @@ const useFetch = (url, arrayOfObjects) => {
       }).catch((err)=>{
         setError(err)
       }).finally(()=>{
-          setLoading(false)
+        setLoading(false)
       })
     }else{
       setLoading(true)
       axios.get(url).then((response)=>{
-        //console.log(response.data.documents[0].fields.cookingTime.stringValue);
         setData(response.data)
       }).catch((err)=>{
         setError(err)
@@ -42,7 +41,6 @@ const useFetch = (url, arrayOfObjects) => {
           setLoading(false)
       })
     }
-
   }, [url])
 
   return {data, loading, error}

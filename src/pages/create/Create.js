@@ -101,6 +101,8 @@ const Create = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if(state.title.trim() === '' || state.ingredients === '' || state.method.trim() === '' || state.time === '') return
+
     let search = []
     state.title.trim().split(' ').map(element=>{
       search.push({stringValue: element.toLowerCase()})
@@ -144,7 +146,7 @@ const Create = () => {
       <label>Recipe method:</label>
       <textarea className='method-input' type='text' value={state.method} onChange={(e) => { dispatch({ type: 'method', e: e }) }}></textarea>
       <label>Cooking time (in minutes):</label>
-      <input className='time-input' type='numbers' value={state.time} onChange={(e) => { dispatch({ type: 'time', e: e }) }}></input>
+      <input className='time-input'  value={state.time} onChange={(e) => { dispatch({ type: 'time', e: e }) }}></input>
       <button type='submit' className='submit-btn'>submit</button>
     </form>
   </div>;
