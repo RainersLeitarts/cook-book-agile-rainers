@@ -26,12 +26,14 @@
     margin: 0;
     padding: 0;
     color: #555555;
+    transition: all 0.1s ease-out;
 }
 
 .cooking-time{
     margin: 0;
     padding: 0;
     color: #a6a0a6;
+    transition: all 0.1s ease-out;
 }
 
 .cooking-method{
@@ -42,6 +44,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+    transition: all 0.1s ease-out;
 }
 
 .view-btn{
@@ -53,4 +56,5 @@
     padding: 8px 20px 8px 20px;
     color: rgb(70, 70, 70);
     cursor: pointer;
+    transition: all 0.1s ease-out;
 }

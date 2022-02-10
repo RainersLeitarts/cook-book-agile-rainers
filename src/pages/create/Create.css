@@ -20,6 +20,7 @@
     border: 1px solid gray;
     border-radius: 3px;
     margin-bottom: 10px;
+    transition: all 0.1s ease-out;
 }
 
 .input-form textarea{
@@ -27,18 +28,20 @@
     padding: 5px;
     border: 1px solid gray;
     border-radius: 3px;
+    transition: all 0.1s ease-out;
 }
 
 .input-form label{
     align-self: flex-start;
     margin-bottom: 5px;
+    transition: all 0.1s ease-out;
 }
 
 .input-form p{
     margin: 0;
     margin-bottom: 15px;
-    
     align-self: flex-start;
+    transition: all 0.1s ease-out;
 }
 
 .submit-btn{
