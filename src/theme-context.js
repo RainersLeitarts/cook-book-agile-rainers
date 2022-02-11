@@ -3,6 +3,10 @@ import { createContext, useEffect, useState } from "react"
 const themes = {
     dark: {
         backgroundColorBody: '#1e1e1e',
+        toggleButtonBackgroundColor: '#1e1e1e',
+        toggleButtonTextColor: '#fefefe',
+        toggleButtonBorderColor: '#fefefe',
+        toggleButtonHoverBackgroundColor: '#404041',
 
         backgroundColorCard: '#404041',
         cardTitleTextColor: '#fefefe',
