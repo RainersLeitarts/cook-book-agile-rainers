@@ -1,5 +1,5 @@
 .page-wrapper{
-    margin-top: 4rem;
+    margin-top: 3.6rem;
     margin-bottom: 4rem;
     display: grid;
     grid-template-columns: auto auto auto;
@@ -18,6 +18,10 @@
     transition: all 0.1s ease-out;
 }
 
+.recipe-card *{
+    transition: all 0.1s ease-out;
+}
+
 .recipe-card:hover{
     transform: rotate(3deg);
 }
@@ -29,7 +33,7 @@
     display: -webkit-box;
     overflow: hidden;
     -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical
+    -webkit-box-orient: vertical;
 }
 
 .cooking-time{

@@ -5,11 +5,21 @@ import Home from './pages/home/Home';
 import Create from './pages/create/Create';
 import Search from './pages/search/Search';
 import Recipe from './pages/recipe/Recipe';
+import { useContext } from 'react';
+import { ThemeContext } from './hooks/useTheme';
+
 
 function App() {
+  const [{theme, isDark}, toggleTheme] = useContext(ThemeContext)
+  console.log(theme)
+
+  
+  document.body.style = `background: ${theme.backgroundColorBody};`;
+
   return (
     <Router>
       <NavBar/>
+      <button onClick={toggleTheme}>Toggle</button>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/create' element={<Create/>}/>

@@ -1,37 +1,34 @@
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 import './RecipesList.css'
+import { ThemeContext } from '../../hooks/useTheme';
 
 const RecipesList = ({ data, search }) => {
   const navigator = useNavigate()
-
-  const RecipeCard = ({ name, title, cookingTime, method }) => {
-    return <div className='recipe-card'>
-      <h1 className='recipe-title'>{title}</h1>
-      <h3 className='cooking-time'>{`${cookingTime} to make.`}</h3>
-      <p className='cooking-method'>{method}</p>
-      <button className='view-btn' onClick={() => { navigator(`/recipe/${/[^/]*$/.exec(name)[0]}`) }}>Cook This</button>
-    </div>
-  }
-
+  const [{ theme }] = useContext(ThemeContext)
+  console.log('Theme: ' + theme.color)
+  
   if (search) {
     return <div className='page-wrapper'>
       {data?.map(recipe => {
-        return <RecipeCard key={/[^/]*$/.exec(recipe.document.name)[0]}
-          name={recipe.document.name}
-          title={recipe.document.fields.title.stringValue}
-          cookingTime={recipe.document.fields.cookingTime.stringValue}
-          method={recipe.document.fields.method.stringValue} />
+        return <div key={/[^/]*$/.exec(recipe.document.name)[0]} className='recipe-card' style={{ backgroundColor: theme.backgroundColorCard }}>
+          <h1 className='recipe-title' style={{ color: theme.cardTitleTextColor }}>{recipe.document.fields.title.stringValue}</h1>
+          <h3 className='cooking-time' style={{ color: theme.cardTimeTextColor }}>{`${recipe.document.fields.cookingTime.stringValue} to make.`}</h3>
+          <p className='cooking-method' style={{ color: theme.cardMethodTextColor }}>{recipe.document.fields.method.stringValue}</p>
+          <button className='view-btn' style={{ color: theme.cardButtonTextColor, backgroundColor: theme.cardButtonColor }} onClick={() => { navigator(`/recipe/${/[^/]*$/.exec(recipe.document.name)[0]}`) }}>Cook This</button>
+        </div>
       })}
     </div>;
   }
 
   return <div className='page-wrapper'>
     {data.documents?.map(recipe => {
-      return <RecipeCard key={/[^/]*$/.exec(recipe.name)[0]}
-        name={recipe.name}
-        title={recipe.fields.title.stringValue}
-        cookingTime={recipe.fields.cookingTime.stringValue}
-        method={recipe.fields.method.stringValue} />
+      return <div key={/[^/]*$/.exec(recipe.name)[0]} className='recipe-card' style={{ backgroundColor: theme.backgroundColorCard }}>
+        <h1 className='recipe-title' style={{ color: theme.cardTitleTextColor }}>{recipe.fields.title.stringValue}</h1>
+        <h3 className='cooking-time' style={{ color: theme.cardTimeTextColor }}>{`${recipe.fields.cookingTime.stringValue} to make.`}</h3>
+        <p className='cooking-method' style={{ color: theme.cardMethodTextColor }}>{recipe.fields.method.stringValue}</p>
+        <button className='view-btn' style={{ color: theme.cardButtonTextColor, backgroundColor: theme.cardButtonColor }} onClick={() => { navigator(`/recipe/${/[^/]*$/.exec(recipe.name)[0]}`) }}>Cook This</button>
+      </div>
     })}
   </div>;
 };

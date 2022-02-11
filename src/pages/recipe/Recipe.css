@@ -7,6 +7,11 @@
     padding: 20px;
     border-radius: 5px;
     text-align: center;
+    transition: all 0.1s ease-out;
+}
+
+.single-recipe-card *{
+    transition: all 0.1s ease-out;
 }
 
 .cooking-method{

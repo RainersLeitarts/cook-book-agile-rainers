@@ -5,6 +5,10 @@
     align-items: center;
 }
 
+.create *{
+    transition: all 0.1s ease-out;
+}
+
 .input-form{
     width: 400px;
     display: flex;

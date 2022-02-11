@@ -1,7 +1,8 @@
-import { useReducer, useState } from 'react'
+import { useReducer, useContext } from 'react'
 import axios from 'axios'
 import './Create.css'
 import { useNavigate } from 'react-router-dom'
+import { ThemeContext } from '../../hooks/useTheme'
 
 
 const reducer = (state, action) => {
@@ -94,6 +95,7 @@ const reducer = (state, action) => {
 
 const Create = () => {
   const [state, dispatch] = useReducer(reducer, { title: '', ingredients: '', ingredient: '', method: '', time: '' })
+  const [{theme}] = useContext(ThemeContext)
 
   const navigate = useNavigate()
 
@@ -133,20 +135,24 @@ const Create = () => {
 
 
   return <div className='create'>
-    <h2>Add a new recipe</h2>
+    <h2 style={{color: theme.createTitleTextColor}}>Add a new recipe</h2>
     <form className='input-form' onSubmit={handleSubmit}>
-      <label>Recipe title:</label>
-      <input className='title-input' type='text' value={state.title} onChange={(e) => { dispatch({ type: 'title', e: e }) }}></input>
-      <label>Recipe ingredients:</label>
+      <label style={{color: theme.createLabelTextColor}}>Recipe title:
+      <input className='title-input' style={{backgroundColor: theme.createInputBackgroundColor}} type='text' value={state.title} onChange={(e) => { dispatch({ type: 'title', e: e }) }}></input>
+      </label>
+      <label style={{color: theme.createLabelTextColor}}>Recipe ingredients:
       <div className='ingredients-wrapper'>
-        <input className='ingredients-input' type='text' value={state.ingredient} onChange={(e) => { dispatch({ type: 'ingredient', e: e }) }}></input>
+        <input className='ingredients-input' style={{backgroundColor: theme.createInputBackgroundColor}} type='text' value={state.ingredient} onChange={(e) => { dispatch({ type: 'ingredient', e: e }) }}></input>
         <button onClick={addIngredientHandler} className='add-btn'>add</button>
       </div>
-      <p>Current ingredients: {state.ingredients}</p>
-      <label>Recipe method:</label>
-      <textarea className='method-input' type='text' value={state.method} onChange={(e) => { dispatch({ type: 'method', e: e }) }}></textarea>
-      <label>Cooking time (in minutes):</label>
-      <input className='time-input'  value={state.time} onChange={(e) => { dispatch({ type: 'time', e: e }) }}></input>
+      </label>
+      <p style={{color: theme.createCurrentIngredientsTextColor}}>Current ingredients: {state.ingredients}</p>
+      <label style={{color: theme.createLabelTextColor}}>Recipe method:
+      <textarea className='method-input' style={{backgroundColor: theme.createInputBackgroundColor}} type='text' value={state.method} onChange={(e) => { dispatch({ type: 'method', e: e }) }}></textarea>
+      </label>
+      <label style={{color: theme.createLabelTextColor}}>Cooking time (in minutes):
+      <input className='time-input' style={{backgroundColor: theme.createInputBackgroundColor}} value={state.time} onChange={(e) => { dispatch({ type: 'time', e: e }) }}></input>
+      </label>
       <button type='submit' className='submit-btn'>submit</button>
     </form>
   </div>;
