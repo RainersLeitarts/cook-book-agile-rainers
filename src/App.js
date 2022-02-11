@@ -9,17 +9,20 @@ import { useContext } from 'react';
 import { ThemeContext } from './hooks/useTheme';
 
 
-function App() {
+function App() { 
   const [{theme, isDark}, toggleTheme] = useContext(ThemeContext)
   console.log(theme)
 
   
   document.body.style = `background: ${theme.backgroundColorBody};`;
 
+
   return (
     <Router>
       <NavBar/>
-      <button onClick={toggleTheme}>Toggle</button>
+      <div className='theme-controls'>
+        <button className={(isDark ? 'dark': 'light') + ' toggle-button'} onClick={toggleTheme}>{isDark ? 'light' : 'dark'}</button>
+      </div>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/create' element={<Create/>}/>
