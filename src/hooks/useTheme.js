@@ -39,7 +39,7 @@ export const navBarColors = {
         backgroundColor: '#5DBB63'
     },
     yellow: {
-        backgroundColor: '#FCD12A'
+        backgroundColor: '#c5cc00'
     },
     orange: {
         backgroundColor: '#FF5F00'
