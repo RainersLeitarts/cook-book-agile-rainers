@@ -10,7 +10,7 @@ import { ThemeContext } from './hooks/useTheme';
 
 
 function App() { 
-  const [{theme, isDark}, toggleTheme] = useContext(ThemeContext)
+  const [{theme, isDark, navBarColor}, toggleTheme, switchNavBarColor] = useContext(ThemeContext)
   console.log(theme)
 
   
@@ -21,6 +21,9 @@ function App() {
     <Router>
       <NavBar/>
       <div className='theme-controls'>
+        <button className={'toggle-nav-color purple'} onClick={() => {switchNavBarColor('purple')}}> </button>
+        <button className={'toggle-nav-color magenta'} onClick={() => {switchNavBarColor('magenta')}}> </button>
+        <button className={'toggle-nav-color green'} onClick={() => {switchNavBarColor('green')}}> </button>
         <button className={(isDark ? 'dark': 'light') + ' toggle-button'} onClick={toggleTheme}>{isDark ? 'light' : 'dark'}</button>
       </div>
       <Routes>

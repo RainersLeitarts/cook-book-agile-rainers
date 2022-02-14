@@ -4,7 +4,7 @@ import useFetch from '../../hooks/useFetch';
 import './Search.css'
 
 const Search = () => {
-  const [search, setSearch] = useSearchParams()
+  const [search] = useSearchParams()
 
   let arrayOfObjects = []
   let q = search.get('q').trim().toLowerCase()

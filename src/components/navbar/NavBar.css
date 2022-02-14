@@ -4,6 +4,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.1s ease-out;
 }
 
 .nav-wrapper{
@@ -14,6 +15,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.1s ease-out;
 }
 
 .title{

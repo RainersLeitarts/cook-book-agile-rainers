@@ -10,7 +10,7 @@ const themes = {
         cardMethodTextColor: '#d6d0c8',
         cardButtonTextColor: '#1e1e1e',
         cardButtonColor: '#b9bbbe',
-        
+
         recipeBackgroundColorCard: '#404041',
         recipeCardTitleTextColor: '#fefefe',
         recipeCardTimeTextColor: '#8e9297',
@@ -28,24 +28,63 @@ const themes = {
     }
 }
 
+const navBarColors = {
+    purple: {
+        backgroundColor: '#58249c'
+    },
+    magenta: {
+        backgroundColor: '#ff00ff'
+    },
+    green: {
+        backgroundColor: '#5DBB63'
+    }
+}
+
 
 export const ThemeContext = createContext()
 
 export const ThemeProvider = ({ children }) => {
     const [isDark, setIsDark] = useState(false)
+    const [navBarColor, setNavBarColor] = useState('')
     const theme = isDark ? themes.dark : themes.light
-    const toggleTheme = () =>{
+
+
+
+    const toggleTheme = () => {
         localStorage.setItem('isDark', JSON.stringify(!isDark))
         setIsDark(!isDark)
     }
 
-    useEffect(()=>{
+    const switchNavBarColor = (color) => {
+        switch (color) {
+            case 'purple':
+                setNavBarColor(navBarColors.purple)
+                break;
+            case 'magenta':
+                setNavBarColor(navBarColors.magenta)
+                localStorage.setItem('navBarColor', JSON.stringify(navBarColors.magenta))
+                break;
+            case 'green':
+                setNavBarColor(navBarColors.green)
+                break;
+        }        
+    }
+
+    useEffect(() => {
         const isDark = localStorage.getItem('isDark') === 'true'
         setIsDark(isDark)
-    },[])
+
+
+        if(localStorage.getItem('navBarColor') != undefined){
+            setNavBarColor(`'${JSON.parse(localStorage.getItem('navBarColor')).backgroundColor}'`)
+            console.log(`'${JSON.parse(localStorage.getItem('navBarColor')).backgroundColor}'`)
+        }
+
+        
+    }, [])
 
     return (
-        <ThemeContext.Provider value={[{ theme, isDark }, toggleTheme]}>
+        <ThemeContext.Provider value={[{ theme, isDark, navBarColor }, toggleTheme, switchNavBarColor]}>
             {children}
         </ThemeContext.Provider>
     )

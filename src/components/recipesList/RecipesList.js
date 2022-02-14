@@ -11,6 +11,7 @@ const RecipesList = ({ data, search }) => {
   if (search) {
     return <div className='page-wrapper'>
       {data?.map(recipe => {
+        
         return <div key={/[^/]*$/.exec(recipe.document.name)[0]} className='recipe-card' style={{ backgroundColor: theme.backgroundColorCard }}>
           <h1 className='recipe-title' style={{ color: theme.cardTitleTextColor }}>{recipe.document.fields.title.stringValue}</h1>
           <h3 className='cooking-time' style={{ color: theme.cardTimeTextColor }}>{`${recipe.document.fields.cookingTime.stringValue} to make.`}</h3>
