@@ -3,9 +3,16 @@
     margin: auto;
     margin-top: 1rem;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: flex-end;
     transition: all 0.1s ease-out;
+}
+
+.theme-controls div{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 0.4rem;
 }
 
 .toggle-button{

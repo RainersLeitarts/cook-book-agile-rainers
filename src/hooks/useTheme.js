@@ -28,7 +28,7 @@ const themes = {
     }
 }
 
-const navBarColors = {
+export const navBarColors = {
     purple: {
         backgroundColor: '#58249c'
     },
@@ -47,8 +47,6 @@ export const ThemeProvider = ({ children }) => {
     const [isDark, setIsDark] = useState(false)
     const [navBarColor, setNavBarColor] = useState({}) //if not in localstorage set default purple
     const theme = isDark ? themes.dark : themes.light
-
-console.log(navBarColor)
 
     const toggleTheme = () => {
         localStorage.setItem('isDark', JSON.stringify(!isDark))
