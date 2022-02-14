@@ -37,6 +37,12 @@ export const navBarColors = {
     },
     green: {
         backgroundColor: '#5DBB63'
+    },
+    yellow: {
+        backgroundColor: '#FCD12A'
+    },
+    orange: {
+        backgroundColor: '#FF5F00'
     }
 }
 
@@ -55,20 +61,9 @@ export const ThemeProvider = ({ children }) => {
 
     
     const switchNavBarColor = (color) => {
-        switch (color) {
-            case 'purple':
-                setNavBarColor(navBarColors.purple)
-                localStorage.setItem('navBarColor', JSON.stringify(navBarColors.purple))
-                break;
-            case 'magenta':
-                setNavBarColor(navBarColors.magenta)
-                localStorage.setItem('navBarColor', JSON.stringify(navBarColors.magenta))
-                break;
-            case 'green':
-                setNavBarColor(navBarColors.green)
-                localStorage.setItem('navBarColor', JSON.stringify(navBarColors.green))
-                break;
-        }        
+        console.log(color)
+        setNavBarColor({backgroundColor: color})
+        localStorage.setItem('navBarColor', JSON.stringify(color))
     }
 
     useEffect(() => {
@@ -76,13 +71,9 @@ export const ThemeProvider = ({ children }) => {
         setIsDark(isDark)
 
         if(localStorage.getItem('navBarColor') != undefined){
-            setNavBarColor({backgroundColor: JSON.parse(localStorage.getItem('navBarColor')).backgroundColor})
-            console.log(JSON.parse(localStorage.getItem('navBarColor')).backgroundColor)
+            setNavBarColor({backgroundColor: JSON.parse(localStorage.getItem('navBarColor'))})
+            console.log(JSON.parse(localStorage.getItem('navBarColor')))
         }
-    
-        
-
-        
     }, [])
 
     return (

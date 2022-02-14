@@ -21,7 +21,8 @@ function App() {
       <div className='theme-controls'>
         <div>
           {navColorButtons.map((key, index) => {
-            return <button key={index} className={'toggle-nav-color'} style={{ backgroundColor: navBarColors[key].backgroundColor }} onClick={() => { switchNavBarColor(key) }}> </button>
+            console.log(navBarColors[key].backgroundColor)
+            return <button key={index} className={'toggle-nav-color'} style={{ backgroundColor: navBarColors[key].backgroundColor }} onClick={() => { switchNavBarColor(navBarColors[key].backgroundColor) }}> </button>
           })}
         </div>
         <button className={(isDark ? 'dark' : 'light') + ' toggle-button'} onClick={toggleTheme}>{isDark ? 'light' : 'dark'}</button>
