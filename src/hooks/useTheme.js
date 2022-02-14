@@ -45,20 +45,22 @@ export const ThemeContext = createContext()
 
 export const ThemeProvider = ({ children }) => {
     const [isDark, setIsDark] = useState(false)
-    const [navBarColor, setNavBarColor] = useState('')
+    const [navBarColor, setNavBarColor] = useState({}) //if not in localstorage set default purple
     const theme = isDark ? themes.dark : themes.light
 
-
+console.log(navBarColor)
 
     const toggleTheme = () => {
         localStorage.setItem('isDark', JSON.stringify(!isDark))
         setIsDark(!isDark)
     }
 
+    
     const switchNavBarColor = (color) => {
         switch (color) {
             case 'purple':
                 setNavBarColor(navBarColors.purple)
+                localStorage.setItem('navBarColor', JSON.stringify(navBarColors.purple))
                 break;
             case 'magenta':
                 setNavBarColor(navBarColors.magenta)
@@ -66,6 +68,7 @@ export const ThemeProvider = ({ children }) => {
                 break;
             case 'green':
                 setNavBarColor(navBarColors.green)
+                localStorage.setItem('navBarColor', JSON.stringify(navBarColors.green))
                 break;
         }        
     }
@@ -74,11 +77,12 @@ export const ThemeProvider = ({ children }) => {
         const isDark = localStorage.getItem('isDark') === 'true'
         setIsDark(isDark)
 
-
         if(localStorage.getItem('navBarColor') != undefined){
-            setNavBarColor(`'${JSON.parse(localStorage.getItem('navBarColor')).backgroundColor}'`)
-            console.log(`'${JSON.parse(localStorage.getItem('navBarColor')).backgroundColor}'`)
+            setNavBarColor({backgroundColor: JSON.parse(localStorage.getItem('navBarColor')).backgroundColor})
+            console.log(JSON.parse(localStorage.getItem('navBarColor')).backgroundColor)
         }
+    
+        
 
         
     }, [])

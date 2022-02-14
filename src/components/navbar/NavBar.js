@@ -3,11 +3,14 @@ import './NavBar.css'
 import SearchBar from '../searchBar/SearchBar';
 import { useContext } from 'react';
 import { ThemeContext } from '../../hooks/useTheme';
+import { Children } from 'react/cjs/react.production.min';
 
 
 const NavBar = () => {
   const navigate = useNavigate()
   const [{navBarColor}] = useContext(ThemeContext)
+
+  console.log(navBarColor)
 
   return <nav style={{backgroundColor: navBarColor.backgroundColor}}>
       <div className='nav-wrapper' style={{backgroundColor: navBarColor.backgroundColor}}>
