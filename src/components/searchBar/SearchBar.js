@@ -7,7 +7,9 @@ const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('')
 
   const inputHandler = (e) =>{
-    setSearchTerm(e.target.value)
+    let input = e.target.value.replace(/ +(?= )/g, '');
+    if(input === ' ') input = ''
+    setSearchTerm(input)
   }
 
   const search = (searchTerm)=>{
