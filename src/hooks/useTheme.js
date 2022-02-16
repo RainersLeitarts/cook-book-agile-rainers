@@ -1,7 +1,10 @@
 import { createContext, useEffect, useState } from "react"
+var randomWords = require('random-words');
 
 const themes = {
     dark: {
+        name: 'dark',
+
         backgroundColorBody: '#1e1e1e',
 
         backgroundColorCard: '#404041',
@@ -23,9 +26,43 @@ const themes = {
         createCurrentIngredientsTextColor: '#fefefe',
     },
     light: {
+        name: 'light',
         backgroundColor: 'white',
         color: '#1e1e1e'
     }
+}
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+
+let randomTheme = {
+    backgroundColorBody: '',
+
+    backgroundColorCard: '',
+    cardTitleTextColor: '',
+    cardTimeTextColor: '',
+    cardMethodTextColor: '',
+    cardButtonTextColor: '',
+    cardButtonColor: '',
+
+    recipeBackgroundColorCard: '',
+    recipeCardTitleTextColor: '',
+    recipeCardTimeTextColor: '',
+    recipeCardMethodTextColor: '',
+    recipeCardIngredientsTextColor: '',
+
+    createInputBackgroundColor: '',
+    createTitleTextColor: '',
+    createLabelTextColor: '',
+    createCurrentIngredientsTextColor: ''
+
 }
 
 export const navBarColors = {
@@ -50,34 +87,71 @@ export const navBarColors = {
 export const ThemeContext = createContext()
 
 export const ThemeProvider = ({ children }) => {
-    const [isDark, setIsDark] = useState(false)
+    const [theme, setTheme] = useState(themes['light'])
     const [navBarColor, setNavBarColor] = useState({}) //if not in localstorage set default purple
-    const theme = isDark ? themes.dark : themes.light
 
     const toggleTheme = () => {
-        localStorage.setItem('isDark', JSON.stringify(!isDark))
-        setIsDark(!isDark)
+        let themeNames = Object.keys(themes)
+
+
+        if (theme.name != themeNames[themeNames.length - 1]) {
+
+            setTheme(themes[themeNames[themeNames.indexOf(theme.name) + 1]])
+            console.log(themes[themeNames[themeNames.indexOf(theme.name) + 1]].name)
+            localStorage.setItem('theme', JSON.stringify(themes[themeNames[themeNames.indexOf(theme.name) + 1]].name))
+        } else {
+
+            setTheme(themes[themeNames[0]])
+            console.log(themes[themeNames[0]])
+            localStorage.setItem('theme', JSON.stringify(themes[themeNames[0]].name))
+        }
+
+        localStorage.setItem('isRandomTheme', JSON.stringify(false))
     }
 
-    
+
     const switchNavBarColor = (color) => {
-        console.log(color)
-        setNavBarColor({backgroundColor: color})
+        setNavBarColor({ backgroundColor: color })
         localStorage.setItem('navBarColor', JSON.stringify(color))
     }
 
-    useEffect(() => {
-        const isDark = localStorage.getItem('isDark') === 'true'
-        setIsDark(isDark)
+    const toggleRandomTheme = () => {
+        let colors = Object.keys(randomTheme)
+        console.log(colors)
+        colors.map(color => {
+            randomTheme[color] = getRandomColor()
+            console.log(randomTheme[color])
+        })
 
-        if(localStorage.getItem('navBarColor') != undefined){
-            setNavBarColor({backgroundColor: JSON.parse(localStorage.getItem('navBarColor'))})
-            console.log(JSON.parse(localStorage.getItem('navBarColor')))
+        
+        if (localStorage.getItem('random-theme') != undefined) {
+            console.log(localStorage.getItem('random-theme'))
+        }
+
+        let randomName = randomWords()
+        setTheme({name: randomName ,...randomTheme})
+        localStorage.setItem('random-theme', JSON.stringify({name: randomName ,...randomTheme}))
+        localStorage.setItem('isRandomTheme', JSON.stringify(true))
+        console.log(localStorage.getItem('isRandomTheme'))
+    }
+
+    useEffect(() => {
+        if(localStorage.getItem('isRandomTheme') != undefined && localStorage.getItem('isRandomTheme') === 'true'){
+            console.log('here')
+            setTheme(JSON.parse(localStorage.getItem('random-theme')))
+        }else if (localStorage.getItem('theme') != undefined) {
+            console.log('here')
+            console.log(JSON.parse(localStorage.getItem('theme')))
+            setTheme(themes[JSON.parse(localStorage.getItem('theme'))])
+        }
+
+        if (localStorage.getItem('navBarColor') != undefined) {
+            setNavBarColor({ backgroundColor: JSON.parse(localStorage.getItem('navBarColor')) })
         }
     }, [])
 
     return (
-        <ThemeContext.Provider value={[{ theme, isDark, navBarColor }, toggleTheme, switchNavBarColor]}>
+        <ThemeContext.Provider value={[{ theme, navBarColor }, toggleTheme, switchNavBarColor, toggleRandomTheme]}>
             {children}
         </ThemeContext.Provider>
     )

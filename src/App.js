@@ -10,8 +10,10 @@ import { ThemeContext, navBarColors } from './hooks/useTheme';
 
 
 function App() {
-  const [{ theme, isDark, navBarColor }, toggleTheme, switchNavBarColor] = useContext(ThemeContext)
+  const [{ theme }, toggleTheme, switchNavBarColor, toggleRandomTheme] = useContext(ThemeContext)
   let navColorButtons = Object.keys(navBarColors)
+
+  console.log(theme)
 
   document.body.style = `background: ${theme.backgroundColorBody};`;
 
@@ -21,11 +23,11 @@ function App() {
       <div className='theme-controls'>
         <div>
           {navColorButtons.map((key, index) => {
-            console.log(navBarColors[key].backgroundColor)
             return <button key={index} className={'toggle-nav-color'} style={{ backgroundColor: navBarColors[key].backgroundColor }} onClick={() => { switchNavBarColor(navBarColors[key].backgroundColor) }}> </button>
           })}
         </div>
-        <button className={(isDark ? 'dark' : 'light') + ' toggle-button'} onClick={toggleTheme}>{isDark ? 'light' : 'dark'}</button>
+        <button className={theme.name + ' toggle-button'} onClick={toggleTheme}>{theme.name}</button>
+        <button className={'toggle-button'} onClick={toggleRandomTheme}>{'random'}</button>
       </div>
       <Routes>
         <Route path='/' element={<Home />} />
