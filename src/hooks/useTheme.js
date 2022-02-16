@@ -150,7 +150,6 @@ export const ThemeProvider = ({ children }) => {
             console.log(JSON.parse(localStorage.getItem('theme')))
             setTheme(themes[JSON.parse(localStorage.getItem('theme'))])
         }
-
         if (localStorage.getItem('navBarColor') != undefined) {
             setNavBarColor({ backgroundColor: JSON.parse(localStorage.getItem('navBarColor')) })
         }

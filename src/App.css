@@ -25,6 +25,15 @@
     transition: all 0.1s ease-out;
 }
 
+.toggle-button.random{
+    max-width: 2rem;
+    min-width: 2rem;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 4px;
+}
+
 .toggle-nav-color{
     padding: 0.5rem;
     border-radius: 100%;
