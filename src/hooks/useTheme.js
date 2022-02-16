@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react"
-var randomWords = require('random-words');
+import { generateSlug } from "random-word-slugs";
 
 const themes = {
     dark: {
@@ -123,23 +123,29 @@ export const ThemeProvider = ({ children }) => {
             console.log(randomTheme[color])
         })
 
-        
+
         if (localStorage.getItem('random-theme') != undefined) {
             console.log(localStorage.getItem('random-theme'))
         }
 
-        let randomName = randomWords()
-        setTheme({name: randomName ,...randomTheme})
-        localStorage.setItem('random-theme', JSON.stringify({name: randomName ,...randomTheme}))
+        let randomName = generateSlug(1,
+            {
+                partsOfSpeech: ['adjective'],
+                categories: {
+                    adjective: ['appearance', 'condition', 'taste']
+                }
+            })
+        setTheme({ name: randomName, ...randomTheme })
+        localStorage.setItem('random-theme', JSON.stringify({ name: randomName, ...randomTheme }))
         localStorage.setItem('isRandomTheme', JSON.stringify(true))
         console.log(localStorage.getItem('isRandomTheme'))
     }
 
     useEffect(() => {
-        if(localStorage.getItem('isRandomTheme') != undefined && localStorage.getItem('isRandomTheme') === 'true'){
+        if (localStorage.getItem('isRandomTheme') != undefined && localStorage.getItem('isRandomTheme') === 'true') {
             console.log('here')
             setTheme(JSON.parse(localStorage.getItem('random-theme')))
-        }else if (localStorage.getItem('theme') != undefined) {
+        } else if (localStorage.getItem('theme') != undefined) {
             console.log('here')
             console.log(JSON.parse(localStorage.getItem('theme')))
             setTheme(themes[JSON.parse(localStorage.getItem('theme'))])
