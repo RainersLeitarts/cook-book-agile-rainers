@@ -13,7 +13,8 @@ const SearchBar = () => {
   }
 
   const search = (searchTerm)=>{
-    searchTerm = searchTerm.replace(/\s+/g, ' ').trim()
+    searchTerm = searchTerm.replace(/[^a-zA-Z ]/g, "").trim()
+    
     if (searchTerm === '') return
     navigate(`/search?q=${searchTerm}`)
     setSearchTerm('')
