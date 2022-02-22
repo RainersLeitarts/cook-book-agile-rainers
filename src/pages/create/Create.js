@@ -20,14 +20,8 @@ const Create = () => {
     e.preventDefault()
     if(title.trim() === '' || ingredients === '' || method.trim() === '' || time === '') return
 
-    let search = []
-    title.trim().split(' ').map(element=>{
-      search.push({stringValue: element.toLowerCase()})
-    })
+    let search = title.trim() + ' ' + method.trim()
 
-    method.trim().split(' ').map(element=>{
-      search.push({stringValue: element.toLowerCase()})
-    })
 
     axios.post('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes', {
       fields: {
@@ -35,7 +29,7 @@ const Create = () => {
         ingredients: {stringValue: ingredients},
         method: {stringValue: method.trim()},
         cookingTime: {stringValue: time + ' minutes'},
-        search: {arrayValue: {values:[search]}}
+        search: {stringValue: search.trim().toLowerCase()}
       }
     }).finally(() => {
       navigate('/')

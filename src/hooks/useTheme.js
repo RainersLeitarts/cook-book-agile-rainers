@@ -13,6 +13,7 @@ const themes = {
         cardMethodTextColor: '#d6d0c8',
         cardButtonTextColor: '#1e1e1e',
         cardButtonColor: '#b9bbbe',
+        cardMissingColor: '#b9bbbe',
 
         recipeBackgroundColorCard: '#404041',
         recipeCardTitleTextColor: '#fefefe',
@@ -51,6 +52,7 @@ let randomTheme = {
     cardMethodTextColor: '',
     cardButtonTextColor: '',
     cardButtonColor: '',
+    cardMissingColor: '',
 
     recipeBackgroundColorCard: '',
     recipeCardTitleTextColor: '',

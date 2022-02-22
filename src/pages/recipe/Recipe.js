@@ -17,7 +17,7 @@ const Recipe = () => {
       <h1 className='recipe-title' style={{color: theme.recipeCardTitleTextColor}}>{data.fields.title.stringValue}</h1>
       <h3 className='ingredients' style={{color: theme.recipeCardIngredientsTextColor}}>{data.fields.ingredients.stringValue}</h3>
       <h3 className='cooking-time' style={{color: theme.recipeCardTimeTextColor}}>{`${data.fields.cookingTime.stringValue} to make.`}</h3>
-      <p className='cooking-method' style={{color: theme.recipeCardMethodTextColor}}>{data.fields.method.stringValue}</p>
+      <p className='single-cooking-method' style={{color: theme.recipeCardMethodTextColor}}>{data.fields.method.stringValue}</p>
     </div>
   }
 
