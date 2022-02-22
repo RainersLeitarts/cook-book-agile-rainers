@@ -41,16 +41,10 @@ const Search = () => {
     console.log(data.documents)
   }
 
-
-
-
-
-
-
   return <div className='wrapper'>
     {loading && <h1 className='loading'>Loading...</h1>}
     {error && <h1 className='error'>error</h1>}
-    {data === undefined && <h1 className='noData'>No recipes found...</h1>}
+    {data?.documents.length === 0 && <h1 className='noData'>No recipes found...</h1>}
     {data != undefined && <RecipesList data={data} />}
   </div>
 };
