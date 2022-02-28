@@ -4,7 +4,7 @@ import './Create.css'
 import { useNavigate } from 'react-router-dom'
 import { ThemeContext } from '../../hooks/useTheme'
 
-const Create = () => {
+const Create = ({loginData}) => {
   const [title, setTitle] = useState('')
   const [ingredients, setIngredients] = useState('')
   const [ingredient, setIngredient] = useState('')
@@ -29,7 +29,8 @@ const Create = () => {
         ingredients: {stringValue: ingredients},
         method: {stringValue: method.trim()},
         cookingTime: {stringValue: time + ' minutes'},
-        search: {stringValue: search.trim().toLowerCase()}
+        search: {stringValue: search.trim().toLowerCase()},
+        author: {stringValue: loginData.name},
       }
     }).finally(() => {
       navigate('/')

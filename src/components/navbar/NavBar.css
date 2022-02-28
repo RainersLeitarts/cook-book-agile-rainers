@@ -48,3 +48,14 @@ nav{
     margin-left: 20px;
 }
 
+.logout-btn{
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 3px;
+    color:white;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
