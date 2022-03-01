@@ -7,7 +7,6 @@ import Search from './pages/search/Search';
 import Recipe from './pages/recipe/Recipe';
 import { useContext, useState } from 'react';
 import { ThemeContext, navBarColors } from './hooks/useTheme';
-import axios from 'axios';
 import ProtectedRoutes from './components/protectedRoutes/ProtectedRoutes';
 
 
