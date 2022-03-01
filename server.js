@@ -33,7 +33,7 @@ app.post('/api/google-login', async (req, res) => {
 
 app.use(express.static(path.join(__dirname, '/build')));
 app.get('*', (req, res) =>
-    req.sendFile(path.join(__dirname, 'index.html'))
+    res.sendFile(path.join(__dirname, 'index.html'))
 );
 
 app.listen(process.env.PORT || 5000, () => {
