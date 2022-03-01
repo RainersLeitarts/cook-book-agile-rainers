@@ -6,8 +6,6 @@ import { ThemeContext } from '../../hooks/useTheme';
 const RecipesList = ({ data }) => {
   const navigator = useNavigate()
   const [{ theme }] = useContext(ThemeContext)
-  console.log('Theme: ' + theme.color)
-
 
   return <div className='page-wrapper'>
     {data.documents?.map(recipe => {

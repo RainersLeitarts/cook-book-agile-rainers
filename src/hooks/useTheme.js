@@ -99,12 +99,10 @@ export const ThemeProvider = ({ children }) => {
         if (theme.name != themeNames[themeNames.length - 1]) {
 
             setTheme(themes[themeNames[themeNames.indexOf(theme.name) + 1]])
-            console.log(themes[themeNames[themeNames.indexOf(theme.name) + 1]].name)
             localStorage.setItem('theme', JSON.stringify(themes[themeNames[themeNames.indexOf(theme.name) + 1]].name))
         } else {
 
             setTheme(themes[themeNames[0]])
-            console.log(themes[themeNames[0]])
             localStorage.setItem('theme', JSON.stringify(themes[themeNames[0]].name))
         }
 
@@ -119,16 +117,9 @@ export const ThemeProvider = ({ children }) => {
 
     const toggleRandomTheme = () => {
         let colors = Object.keys(randomTheme)
-        console.log(colors)
         colors.map(color => {
             randomTheme[color] = getRandomColor()
-            console.log(randomTheme[color])
         })
-
-
-        if (localStorage.getItem('random-theme') != undefined) {
-            console.log(localStorage.getItem('random-theme'))
-        }
 
         let randomName = generateSlug(1,
             {
@@ -140,16 +131,12 @@ export const ThemeProvider = ({ children }) => {
         setTheme({ name: randomName, ...randomTheme })
         localStorage.setItem('random-theme', JSON.stringify({ name: randomName, ...randomTheme }))
         localStorage.setItem('isRandomTheme', JSON.stringify(true))
-        console.log(localStorage.getItem('isRandomTheme'))
     }
 
     useEffect(() => {
         if (localStorage.getItem('isRandomTheme') != undefined && localStorage.getItem('isRandomTheme') === 'true') {
-            console.log('here')
             setTheme(JSON.parse(localStorage.getItem('random-theme')))
         } else if (localStorage.getItem('theme') != undefined) {
-            console.log('here')
-            console.log(JSON.parse(localStorage.getItem('theme')))
             setTheme(themes[JSON.parse(localStorage.getItem('theme'))])
         }
         if (localStorage.getItem('navBarColor') != undefined) {

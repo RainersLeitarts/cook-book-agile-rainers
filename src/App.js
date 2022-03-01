@@ -14,8 +14,6 @@ function App() {
   const [{ theme }, toggleTheme, switchNavBarColor, toggleRandomTheme] = useContext(ThemeContext)
   let navColorButtons = Object.keys(navBarColors)
 
-  console.log(theme)
-
   document.body.style = `background: ${theme.backgroundColorBody};`;
 
 
@@ -43,8 +41,6 @@ function App() {
     const data = await res.json();
     setLoginData(data);
     localStorage.setItem('loginData', JSON.stringify(data));
-
-    console.log(data)
   }
 
   const handleLogout = () => {
