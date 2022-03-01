@@ -41,12 +41,30 @@ const Create = ({loginData}) => {
     e.preventDefault()
 
     if(ingredient === '') return
-    
+
+    let ingredientsArr = ingredient.split(',')
+
+    //filter doesnt trim
+    ingredientsArr = ingredientsArr.filter(item => {
+      if(item.replace(/[^a-zA-Z0-9]/g,'').trim() !== ''){
+        return item.trim()
+      }
+    })
+
+    //so map is used
+    ingredientsArr = ingredientsArr.map(item => {
+      return item.trim()
+    })
+
+    let ingredientsString = ingredientsArr.join(', ')
+    //removes last comma
+    if(ingredientsString.endsWith(',')) ingredientsString = ingredientsString.slice(0, -1)
+
     setIngredients((prevIngredients)=>{
-      if(ingredients != ''){
-        setIngredients(prevIngredients + ', ' + ingredient.trim())
+      if(prevIngredients != '' && ingredientsString.trim() != ''){
+        setIngredients(prevIngredients + ', ' + ingredientsString)
       }else{
-        setIngredients(prevIngredients + ingredient.trim())
+        setIngredients(prevIngredients + ingredientsString)
       }
 
       setIngredient('')
@@ -90,7 +108,7 @@ const Create = ({loginData}) => {
         <button onClick={addIngredientHandler} className='add-btn'>add</button>
       </div>
       </label>
-      <p style={{color: theme.createCurrentIngredientsTextColor}}>Current ingredients: {ingredients}</p>
+      <p style={{color: theme.createCurrentIngredientsTextColor}}>Current ingredients: {ingredients? ingredients : '[ Seperate with "," to add in bulk ]'}</p>
       <label style={{color: theme.createLabelTextColor}}>Recipe method:
       <textarea className='method-input' style={{backgroundColor: theme.createInputBackgroundColor}} type='text' value={method} onChange={(e) => { inputHandler(e, 'method') }}></textarea>
       </label>
