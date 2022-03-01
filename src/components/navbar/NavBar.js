@@ -25,6 +25,9 @@ const NavBar = ({handleSuccess, handleFailure, handleLogout, loginData}) => {
             ) : <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
               buttonText="Login"
+              render={renderProps => (
+                <button onClick={renderProps.onClick} style={{height: '1.81rem', backgroundColor: 'transparent', cursor: 'pointer', border: '1px solid white',borderRadius: '3px', marginLeft: '13px', fontSize: '13px', padding: '0px 15px 0px 15px', color: 'white'}}>Login</button>
+              )}
               onSuccess={handleSuccess}
               onFailure={handleFailure}
               cookiePolicy='single_host_origin'

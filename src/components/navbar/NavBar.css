@@ -29,7 +29,7 @@ nav{
 }
 
 .items{
-    align-items: flex-end;
+    align-items: center;
     width: 1200px;
     margin: auto;
     display: flex;
