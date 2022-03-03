@@ -87,8 +87,8 @@ function App() {
     let id = profileData.name.split('/').pop()
 
     console.log('ProfileData: ' + id)
-    setLoginData({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue});
-    localStorage.setItem('loginData', JSON.stringify({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue}));
+    setLoginData({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue});
+    localStorage.setItem('loginData', JSON.stringify({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue}));
   }
 
   const handleLogout = () => {

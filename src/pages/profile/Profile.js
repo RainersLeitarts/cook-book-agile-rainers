@@ -7,6 +7,8 @@ import RecipesList from '../../components/recipesList/RecipesList';
 
 const Profile = ({ loginData, setLoginData }) => {
 
+    console.log(loginData)
+
     const [fullname, setFullname] = useState(loginData.fullname)
     const [username, setUsername] = useState(loginData.username)
     const [bio, setBio] = useState(loginData.bio ? loginData.bio : '')
