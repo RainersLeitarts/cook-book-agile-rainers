@@ -10,6 +10,7 @@ import { useContext, useState } from 'react';
 import { ThemeContext, navBarColors } from './hooks/useTheme';
 import ProtectedRoutes from './components/protectedRoutes/ProtectedRoutes';
 import Profile from './pages/profile/Profile';
+import User from './pages/user/User';
 
 
 
@@ -117,6 +118,7 @@ function App() {
         </Route>
         <Route path='/search' element={<Search />} />
         <Route path='/recipe/:id' element={<Recipe />} />
+        <Route path='/user/:id' element={<User/>}/>
       </Routes>
     </Router>
   );

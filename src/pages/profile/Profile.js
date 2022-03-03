@@ -3,12 +3,13 @@ import axios from 'axios';
 import { ThemeContext } from '../../hooks/useTheme';
 import RecipesList from '../../components/recipesList/RecipesList';
 
-
+//TODO: fix myRecipes refresh after username update
 
 const Profile = ({ loginData, setLoginData }) => {
 
+    //make req to get user data
     console.log(loginData)
-
+    //put user dat in states
     const [fullname, setFullname] = useState(loginData.fullname)
     const [username, setUsername] = useState(loginData.username)
     const [bio, setBio] = useState(loginData.bio ? loginData.bio : '')

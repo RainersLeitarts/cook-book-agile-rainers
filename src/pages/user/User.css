@@ -1,0 +1,21 @@
+.username-wrapper{
+    display: flex;
+    align-items: center;
+    font-size: 36px;
+    font-weight: 500;
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.username-wrapper p{
+    margin: 0;
+}
+
+.email{
+    font-weight: 100;
+}
+
+.bio{
+    font-weight: 100;
+    margin-bottom: 3rem;
+}

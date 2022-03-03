@@ -15,7 +15,7 @@ const RecipesList = ({ data }) => {
         <p className='cooking-method' style={{ color: theme.cardMethodTextColor }}>{recipe.fields.method.stringValue}</p>
         <button className='view-btn' style={{ color: theme.cardButtonTextColor, backgroundColor: theme.cardButtonColor }} onClick={() => { navigator(`/recipe/${/[^/]*$/.exec(recipe.name)[0]}`) }}>Cook This</button>
         {recipe.fields.missing && <p style={{padding: 0, margin: 0, color: theme.cardMissingColor}}>Missing: {recipe.fields.missing.join(", ")}</p>}
-        {recipe.fields.author && <p style={{padding: 0, marginTop: '1rem', color: theme.cardMissingColor}}>Author: {recipe.fields.author.stringValue}</p>}
+        {recipe.fields.author && <p style={{padding: 0, marginTop: '1rem', color: theme.cardMissingColor, cursor: 'pointer'}} onClick={() => { navigator(`/user/${recipe.fields.authorid.stringValue}`) }}>Author: {recipe.fields.author.stringValue}</p>}
       </div>
     })}
   </div>;
