@@ -5,17 +5,25 @@
     font-weight: 500;
     margin: 0;
     padding-bottom: 0;
+    transition: all 0.1s ease-out;
 }
 
 .username-wrapper p{
     margin: 0;
+    transition: all 0.1s ease-out;
 }
 
 .email{
     font-weight: 100;
+    transition: all 0.1s ease-out;
 }
 
 .bio{
     font-weight: 100;
     margin-bottom: 3rem;
+    transition: all 0.1s ease-out;
+}
+
+.user-recipes{
+    transition: all 0.1s ease-out;
 }
