@@ -20,6 +20,7 @@ const NavBar = ({handleSuccess, handleFailure, handleLogout, loginData}) => {
         {
           loginData ? ( <div>
             <button onClick={() => navigate('/create')} className='create-btn'>create recipe</button>
+            <button className='logout-btn' onClick={()=>{navigate('/profile')}}>My Profile</button>
             <button className='logout-btn' onClick={handleLogout}>Logout</button>
             </div>
             ) : <GoogleLogin

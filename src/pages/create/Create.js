@@ -30,7 +30,8 @@ const Create = ({loginData}) => {
         method: {stringValue: method.trim()},
         cookingTime: {stringValue: time + ' minutes'},
         search: {stringValue: search.trim().toLowerCase()},
-        author: {stringValue: loginData.name},
+        author: {stringValue: loginData.username},
+        authorid: {stringValue: loginData.id},
       }
     }).finally(() => {
       navigate('/')
