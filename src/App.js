@@ -40,8 +40,6 @@ function App() {
         username: { stringValue: loginData.name.trim() },
       }
     })
-    console.log('User created!')
-
   }
 
 
@@ -65,23 +63,18 @@ function App() {
     )
 
     if (res.data[0].document != undefined) {
-      console.log('here')
       return res.data[0].document
     } else {
-      console.log('there')
       await createUser(loginData)
       return await getProfile(loginData)
     }
   }
 
   const handleSuccess = async (googleData) => {
-    console.log('FB_KEY: '+ process.env.REACT_APP_FIREBASE_API_KEY)
-    console.log('GOOGLE_TOKEN: '+ googleData.tokenId)
     const res = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
     {"postBody":`id_token=${googleData.tokenId}&providerId=google.com`,"requestUri":"https://cookbook-agile-rewidle.herokuapp.com","returnIdpCredential":true,"returnSecureToken":true}
     )
 
-    console.log(res)
     const data = res.data;
 
 
@@ -90,7 +83,6 @@ function App() {
 
     setLoginData({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue});
     localStorage.setItem('loginData', JSON.stringify({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue}));
-    console.log(localStorage.getItem('loginData'))
   }
 
   const handleLogout = () => {
