@@ -33,7 +33,10 @@ const Create = ({loginData}) => {
         author: {stringValue: loginData.username},
         authorid: {stringValue: loginData.id},
       }
-    }).finally(() => {
+    }, {headers: {
+        //insert idToken
+        Authorization: 'Bearer ' + loginData.idToken
+      }}).finally(() => {
       navigate('/')
     })
   }

@@ -71,8 +71,6 @@ const User = () => {
         <h1 style={{ color: theme.cardTitleTextColor }} className='bio'>Bio: {userData.fields?.bio.stringValue}</h1>
         <h1 style={{ color: theme.cardTitleTextColor }} className='user-recipes'>{userData.fields?.username.stringValue + '\'s recipes:'}</h1>
         <div>{userRecipes ? <RecipesList data={userRecipes} /> : console.log("no data")}</div></div>)}
-
-        
     </div>
     )
 }

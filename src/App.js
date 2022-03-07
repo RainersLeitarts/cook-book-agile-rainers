@@ -1,5 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { getAuth } from 'firebase/auth'
+import { initializeApp } from 'firebase/app'
 import axios from 'axios';
 import NavBar from './components/navbar/NavBar';
 import Home from './pages/home/Home';
@@ -73,23 +75,22 @@ function App() {
   }
 
   const handleSuccess = async (googleData) => {
-    const res = await fetch('/api/google-login', {
-      method: 'POST',
-      body: JSON.stringify({
-        token: googleData.tokenId,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    console.log('FB_KEY: '+ process.env.REACT_APP_FIREBASE_API_KEY)
+    console.log('GOOGLE_TOKEN: '+ googleData.tokenId)
+    const res = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
+    {"postBody":`id_token=${googleData.tokenId}&providerId=google.com`,"requestUri":"https://cookbook-agile-rewidle.herokuapp.com","returnIdpCredential":true,"returnSecureToken":true}
+    )
 
-    const data = await res.json();
+    console.log(res)
+    const data = res.data;
+
+
     const profileData = await getProfile(data)
     let id = profileData.name.split('/').pop()
 
-    console.log('ProfileData: ' + id)
     setLoginData({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue});
     localStorage.setItem('loginData', JSON.stringify({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue}));
+    console.log(localStorage.getItem('loginData'))
   }
 
   const handleLogout = () => {
