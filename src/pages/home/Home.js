@@ -5,6 +5,8 @@ import './Home.css'
 const Home = () => {
   const {data, loading, error} = useFetch('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes')
 
+    console.log('reload')
+
     return <div className='wrapper'>
       {loading && <h1 className='loading'>Loading...</h1>}
       {error && <h1 className='error'>error</h1>}

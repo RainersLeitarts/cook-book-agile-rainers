@@ -1,7 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { getAuth } from 'firebase/auth'
-import { initializeApp } from 'firebase/app'
 import axios from 'axios';
 import NavBar from './components/navbar/NavBar';
 import Home from './pages/home/Home';
@@ -79,8 +77,6 @@ function App() {
     )
 
     const data = res.data;
-
-    console.log(res.data.localId)
 
     const profileData = await getProfile(data)
     let id = profileData.name.split('/').pop()

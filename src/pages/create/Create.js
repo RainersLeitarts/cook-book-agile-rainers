@@ -16,7 +16,6 @@ const Create = ({ loginData, edit, editData }) => {
 
   useEffect(() => {
     if (edit) {
-      console.log(editData)
       setTitle(editData.fields.title.stringValue)
       setIngredients(editData.fields.ingredients.stringValue)
       setMethod(editData.fields.method.stringValue)
@@ -51,8 +50,6 @@ const Create = ({ loginData, edit, editData }) => {
           //insert idToken
           Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('loginData')).idToken
         }
-      }).then((res)=>{
-        console.log(res.data)
       }).finally(() => {
         navigate('/')
       })
