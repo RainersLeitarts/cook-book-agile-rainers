@@ -59,9 +59,9 @@ const Profile = ({ loginData, setLoginData }) => {
         )
 
         let data = { documents: res.data }
-        
-        if(data.documents[0].document == undefined || data.documents[0].document.fields == undefined) return
-        
+
+        if (data.documents[0].document == undefined || data.documents[0].document.fields == undefined) return
+
         let innerdata = { data }
         let temp = innerdata.data.documents.map(document => {
             return document.document
@@ -72,15 +72,20 @@ const Profile = ({ loginData, setLoginData }) => {
         return data
     }
 
-    const updateMyRecipesAuthor = () =>{
+    const updateMyRecipesAuthor = () => {
         myRecipes.documents.map(doc => {
             axios.patch('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes/' + doc.name.split('/').pop() + '?updateMask.fieldPaths=author', {
                 fields: {
                     author: { stringValue: username }
                 }
+            }, {
+                headers: {
+                    //insert idToken
+                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('loginData')).idToken
+                }
             })
         })
-        
+
     }
 
     const inputHandler = (e, type) => {
@@ -120,9 +125,9 @@ const Profile = ({ loginData, setLoginData }) => {
                 </label>
                 <button type='submit' onClick={updateUser} className='submit-btn'>Update</button>
             </form>
-            <h1 style={{color: theme.createInputBackgroundColor}}>My recipes: </h1>
+            <h1 style={{ color: theme.createInputBackgroundColor }}>My recipes: </h1>
             <div className='wrapper'>
-                {found? <RecipesList data={myRecipes} /> : <h1 className='noData'>No recipes found...</h1>}
+                {found ? <RecipesList data={myRecipes} /> : <h1 className='noData'>No recipes found...</h1>}
 
             </div>
         </div>

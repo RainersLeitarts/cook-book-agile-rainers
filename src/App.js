@@ -13,6 +13,7 @@ import { ThemeContext, navBarColors } from './hooks/useTheme';
 import ProtectedRoutes from './components/protectedRoutes/ProtectedRoutes';
 import Profile from './pages/profile/Profile';
 import User from './pages/user/User';
+import Edit from './pages/Edit/Edit';
 
 
 
@@ -33,11 +34,13 @@ function App() {
   }
 
   const createUser = async (loginData) => {
-    await axios.post('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/users', {
+    console.log(loginData)
+
+    await axios.post(`https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/users?documentId=${loginData.localId}`, {
       fields: {
         email: { stringValue: loginData.email.trim() },
-        fullname: { stringValue: loginData.name.trim() },
-        username: { stringValue: loginData.name.trim() },
+        fullname: { stringValue: loginData.displayName.trim() },
+        username: { stringValue: loginData.displayName.trim() },
       }
     })
   }
@@ -77,6 +80,7 @@ function App() {
 
     const data = res.data;
 
+    console.log(res.data.localId)
 
     const profileData = await getProfile(data)
     let id = profileData.name.split('/').pop()
@@ -108,6 +112,7 @@ function App() {
         <Route element={<ProtectedRoutes isAuthorised={loginData ? true : false} />}>
           <Route path='/create' element={<Create loginData={loginData} />} />
           <Route path='/profile' element={<Profile loginData={loginData} setLoginData={setLoginData}/>} />
+          <Route path='/edit/:id' element={<Edit loginData={loginData}/>}/>
         </Route>
         <Route path='/search' element={<Search />} />
         <Route path='/recipe/:id' element={<Recipe />} />

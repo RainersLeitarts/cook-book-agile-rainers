@@ -62,3 +62,20 @@
     color: rgb(70, 70, 70);
     cursor: pointer;
 }
+
+.additionals{
+    display: flex;
+    flex-direction: row;
+}
+
+.additionals .delete{
+    align-self: center;
+    margin-left: auto;
+    
+}
+
+.additionals .edit{
+    align-self: center;
+    margin-left: 1rem;
+    
+}

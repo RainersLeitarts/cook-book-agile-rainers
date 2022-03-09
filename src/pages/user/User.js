@@ -68,7 +68,7 @@ const User = () => {
             <p style={{ color: theme.cardTitleTextColor }} className='username'>{userData.fields?.username.stringValue}</p>
         </div>
         <h1 style={{ color: theme.cardTitleTextColor }} className='email'>Email: {userData.fields?.email.stringValue}</h1>
-        <h1 style={{ color: theme.cardTitleTextColor }} className='bio'>Bio: {userData.fields?.bio.stringValue}</h1>
+        <h1 style={{ color: theme.cardTitleTextColor }} className='bio'>Bio: {userData.fields?.bio?.stringValue? userData.fields?.bio?.stringValue: 'user hasn\'t added bio'}</h1>
         <h1 style={{ color: theme.cardTitleTextColor }} className='user-recipes'>{userData.fields?.username.stringValue + '\'s recipes:'}</h1>
         <div>{userRecipes ? <RecipesList data={userRecipes} /> : console.log("no data")}</div></div>)}
     </div>
