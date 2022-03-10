@@ -32,6 +32,11 @@ const Profile = ({ loginData, setLoginData }) => {
                 username: { stringValue: username },
                 bio: { stringValue: bio }
             }
+        }, {
+            headers: {
+                //insert idToken
+                Authorization: 'Bearer ' + loginData.idToken
+            }
         })
 
         updateMyRecipesAuthor()
