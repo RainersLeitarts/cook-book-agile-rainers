@@ -16,24 +16,27 @@ import Edit from './pages/Edit/Edit';
 
 
 function App() {
+  //theme information context
   const [{ theme }, toggleTheme, switchNavBarColor, toggleRandomTheme] = useContext(ThemeContext)
+  //navBar color object keys used to render navBar color buttons
   let navColorButtons = Object.keys(navBarColors)
-
+  //sets body background color
   document.body.style = `background: ${theme.backgroundColorBody};`;
 
+  //login data state, initialized from localStorage loginData if it is present else is null
   const [loginData, setLoginData] = useState(
     localStorage.getItem('loginData')
       ? JSON.parse(localStorage.getItem('loginData'))
       : null
   )
 
+  //handles login Failure
   const handleFailure = (result) => {
     alert(result)
   }
 
+  //creates user profile if it is not present
   const createUser = async (loginData) => {
-    console.log(loginData)
-
     await axios.post(`https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/users?documentId=${loginData.localId}`, {
       fields: {
         email: { stringValue: loginData.email.trim() },
@@ -45,7 +48,7 @@ function App() {
 
 
   const getProfile = async (loginData) => {
-    
+    //looks for profile un users collection with the same email
     const res = await axios.post('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents:runQuery',
       {
         structuredQuery: {
@@ -63,30 +66,41 @@ function App() {
       }
     )
 
+    //if profile is found profile data is returned
     if (res.data[0].document != undefined) {
       return res.data[0].document
     } else {
+      //if user profile is not found it is created
       await createUser(loginData)
       return await getProfile(loginData)
     }
   }
 
+  //handles successful login, uses GoogleData from google login
   const handleSuccess = async (googleData) => {
+    //post request to authorize in firebase with Idp, Google login tokenId must be provided
     const res = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
     {"postBody":`id_token=${googleData.tokenId}&providerId=google.com`,"requestUri":"https://cookbook-agile-rewidle.herokuapp.com","returnIdpCredential":true,"returnSecureToken":true}
     )
 
     const data = res.data;
 
+    //gets user profile data from users collection
     const profileData = await getProfile(data)
+    //gets userId
     let id = profileData.name.split('/').pop()
 
+    //sets LoginData state with all of the users information
     setLoginData({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue});
+    //stores LoginData in LocalStorage
     localStorage.setItem('loginData', JSON.stringify({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue}));
   }
 
+  //handles logout
   const handleLogout = () => {
+    //removes LoginData from LocalStorage
     localStorage.removeItem('loginData')
+    //sets LoginData state to null
     setLoginData(null)
   }
 

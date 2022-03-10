@@ -3,9 +3,8 @@ import useFetch from '../../hooks/useFetch';
 import './Home.css'
 
 const Home = () => {
+  //using useFetch hook to fetch recipes
   const {data, loading, error} = useFetch('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes')
-
-    console.log('reload')
 
     return <div className='wrapper'>
       {loading && <h1 className='loading'>Loading...</h1>}

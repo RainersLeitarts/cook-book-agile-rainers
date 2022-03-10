@@ -4,38 +4,42 @@ import './Create.css'
 import { useNavigate } from 'react-router-dom'
 import { ThemeContext } from '../../hooks/useTheme'
 
+//since Create is used to also edit recipe it requires edit boolean and recipeInfo
 const Create = ({ loginData, edit, editData }) => {
+  //sets state for each field for recipe info
   const [title, setTitle] = useState('')
   const [ingredients, setIngredients] = useState('')
   const [ingredient, setIngredient] = useState('')
   const [method, setMethod] = useState('')
   const [time, setTime] = useState('')
-
+  //theme context
   const [{ theme }] = useContext(ThemeContext)
 
-
+  //runs once when page is loaded
   useEffect(() => {
+    //if Create is used for editing recipe info states are set editable recipe info
     if (edit) {
       setTitle(editData.fields.title.stringValue)
       setIngredients(editData.fields.ingredients.stringValue)
       setMethod(editData.fields.method.stringValue)
       setTime(editData.fields.cookingTime.stringValue.replaceAll(' minutes', ''))
     }
-
   }, [])
 
-
+  //defines navigate
   const navigate = useNavigate()
 
-
+  //handles form submition
   const handleSubmit = (e) => {
+    //prevents page reload
     e.preventDefault()
+    //checks if any of the fields are empty if true form is not submited
     if (title.trim() === '' || ingredients === '' || method.trim() === '' || time === '') return
-
+    //each word from title and method is put into search keyword array for search
     let search = title.trim() + ' ' + method.trim()
 
 
-    //   /[^/]*$/.exec(editData.name)
+    //if Create is used for editing recipe patch request is sent else post request is sent to create new document
     if (edit) {
       axios.patch('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes/' + editData.name.split('/').pop() + '?updateMask.fieldPaths=title&updateMask.fieldPaths=ingredients&updateMask.fieldPaths=method&updateMask.fieldPaths=cookingTime&updateMask.fieldPaths=search', {
         fields: {
