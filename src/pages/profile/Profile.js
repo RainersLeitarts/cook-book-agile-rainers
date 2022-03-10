@@ -9,7 +9,7 @@ const Profile = ({ loginData, setLoginData }) => {
 
     //make req to get user data
     console.log(loginData)
-    //put user dat in states
+    //put user data in states
     const [fullname, setFullname] = useState(loginData.fullname)
     const [username, setUsername] = useState(loginData.username)
     const [bio, setBio] = useState(loginData.bio ? loginData.bio : '')
@@ -40,6 +40,7 @@ const Profile = ({ loginData, setLoginData }) => {
         localStorage.setItem('loginData', JSON.stringify({ ...loginData, fullname: fullname, username: username, bio: bio }));
     }
 
+    //gets user recipes
     const getMyRecipes = async () => {
         const res = await axios.post('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents:runQuery',
             {

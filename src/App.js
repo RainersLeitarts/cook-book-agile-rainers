@@ -43,6 +43,11 @@ function App() {
         fullname: { stringValue: loginData.displayName.trim() },
         username: { stringValue: loginData.displayName.trim() },
       }
+    }, {
+      headers: {
+        //insert idToken
+        Authorization: 'Bearer ' + loginData.idToken
+      }
     })
   }
 
