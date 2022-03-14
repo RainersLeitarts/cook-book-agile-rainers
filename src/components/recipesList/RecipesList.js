@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import './RecipesList.css'
 import { ThemeContext } from '../../hooks/useTheme';
-import axios from 'axios';
 
 const RecipesList = ({ data, deleteFunct }) => {
   const [recipeData, setRecipeData] = useState(data)

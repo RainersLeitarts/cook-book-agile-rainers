@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import './NavBar.css'
 import SearchBar from '../searchBar/SearchBar';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { ThemeContext } from '../../hooks/useTheme';
-import { Children } from 'react/cjs/react.production.min';
 import { GoogleLogin } from 'react-google-login';
 
 

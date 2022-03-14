@@ -51,11 +51,11 @@ const Profile = ({ loginData, setLoginData }) => {
         const handleData = (recipeData) => {
             let data = { documents: recipeData }
 
-            if (data.documents[0].document == undefined || data.documents[0].document.fields == undefined){
+            if (data.documents[0].document == undefined || data.documents[0].document.fields == undefined) {
                 setMyRecipes({})
                 setFound(false)
                 return
-            } 
+            }
 
             let innerdata = { data }
             let temp = innerdata.data.documents.map(document => {
@@ -63,7 +63,7 @@ const Profile = ({ loginData, setLoginData }) => {
             })
             data = { documents: temp }
 
-            if(data == {} )console.log('true')
+            if (data == {}) console.log('true')
 
             setMyRecipes(data)
             setFound(true)
@@ -106,16 +106,17 @@ const Profile = ({ loginData, setLoginData }) => {
         getMyRecipes()
     }
 
-    const deleteRecipe =  (recipeId) => {
-        axios.delete(`https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes${recipeId}`,
+    const deleteRecipe = async (recipeId) => {
+        const confirmed =  window.confirm('Delete recipe?')
+        if(!confirmed) return
+
+        await sendRequest(
             {
-                headers: {
-                    //insert idToken
-                    Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('loginData')).idToken
-                }
-            }).finally(() => {
-                getMyRecipes()
+                url: `https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes${recipeId}`,
+                method: 'delete'
             })
+
+       getMyRecipes()
     }
 
 
