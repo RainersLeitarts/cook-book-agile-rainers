@@ -8,7 +8,7 @@ const useGetUser = (loginData) => {
 
   useEffect(()=>{
     setLoading(true)
-
+    
     axios.post('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents:runQuery',
             {
                 structuredQuery: {

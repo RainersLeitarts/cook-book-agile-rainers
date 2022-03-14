@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import { ThemeContext } from '../../hooks/useTheme';
@@ -9,8 +9,17 @@ const Edit = ({loginData}) => {
     let { id } = useParams();
     //theme context
     const [{ theme }] = useContext(ThemeContext)
+
+    const [data, setData] = useState()
+
     //using useFetch to get recipe info
-    const { data, loading, error } = useFetch(`https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes/${id}`)
+    const { loading, error, sendRequest } = useFetch()
+
+    useEffect(()=>{
+        sendRequest(
+            {url: `https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes/${id}`}
+            , (data)=>{setData(data)})
+    },[])
 
     //checks if logged in user is the author of the recipe if false notifies user
     if(/[^/]*$/.exec(data?.fields.authorid.stringValue)[0] != loginData.id){
@@ -24,6 +33,8 @@ const Edit = ({loginData}) => {
     //Create is reused to edit recipe info
     return (
         <div>
+            {loading && <h1 className='loading'>Loading...</h1>}
+            {error && <h1 className='error'>error</h1>}
             <Create edit={true} editData={data}/>
         </div>
     )

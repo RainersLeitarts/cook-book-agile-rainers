@@ -2,13 +2,11 @@ import { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
 import { ThemeContext } from '../../hooks/useTheme';
 import RecipesList from '../../components/recipesList/RecipesList';
+import useFetch from '../../hooks/useFetch';
 
 //TODO: fix myRecipes refresh after username update
 
 const Profile = ({ loginData, setLoginData }) => {
-
-    //make req to get user data
-    console.log(loginData)
     //put user data in states
     const [fullname, setFullname] = useState(loginData.fullname)
     const [username, setUsername] = useState(loginData.username)
@@ -16,6 +14,8 @@ const Profile = ({ loginData, setLoginData }) => {
 
     const [myRecipes, setMyRecipes] = useState({})
     const [found, setFound] = useState(false)
+
+    const { loading, error, sendRequest } = useFetch()
 
     useEffect(() => {
         getMyRecipes()
@@ -26,20 +26,20 @@ const Profile = ({ loginData, setLoginData }) => {
     const updateUser = (e) => {
         e.preventDefault()
 
-        axios.patch('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/users/' + loginData.id + '?updateMask.fieldPaths=fullname&updateMask.fieldPaths=username&updateMask.fieldPaths=bio', {
-            fields: {
-                fullname: { stringValue: fullname },
-                username: { stringValue: username },
-                bio: { stringValue: bio }
-            }
-        }, {
-            headers: {
-                //insert idToken
-                Authorization: 'Bearer ' + loginData.idToken
+        sendRequest({
+            url: 'https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/users/' + loginData.id + '?updateMask.fieldPaths=fullname&updateMask.fieldPaths=username&updateMask.fieldPaths=bio',
+            method: 'patch',
+            data: {
+                fields: {
+                    fullname: { stringValue: fullname },
+                    username: { stringValue: username },
+                    bio: { stringValue: bio }
+                }
             }
         })
 
         updateMyRecipesAuthor()
+        getMyRecipes()
 
         setLoginData({ ...loginData, fullname: fullname, username: username, bio: bio });
         localStorage.setItem('loginData', JSON.stringify({ ...loginData, fullname: fullname, username: username, bio: bio }));
@@ -47,8 +47,33 @@ const Profile = ({ loginData, setLoginData }) => {
 
     //gets user recipes
     const getMyRecipes = async () => {
-        const res = await axios.post('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents:runQuery',
-            {
+        //handles data from sendRequest
+        const handleData = (recipeData) => {
+            let data = { documents: recipeData }
+
+            if (data.documents[0].document == undefined || data.documents[0].document.fields == undefined){
+                setMyRecipes({})
+                setFound(false)
+                return
+            } 
+
+            let innerdata = { data }
+            let temp = innerdata.data.documents.map(document => {
+                return document.document
+            })
+            data = { documents: temp }
+
+            if(data == {} )console.log('true')
+
+            setMyRecipes(data)
+            setFound(true)
+        }
+
+        //send request
+        await sendRequest({
+            url: 'https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents:runQuery',
+            method: 'post',
+            data: {
                 structuredQuery: {
                     from: [{ collectionId: 'recipes' }],
                     where: {
@@ -62,37 +87,37 @@ const Profile = ({ loginData, setLoginData }) => {
                     }
                 }
             }
-        )
-
-        let data = { documents: res.data }
-
-        if (data.documents[0].document == undefined || data.documents[0].document.fields == undefined) return
-
-        let innerdata = { data }
-        let temp = innerdata.data.documents.map(document => {
-            return document.document
-        })
-        data = { documents: temp }
-        setMyRecipes(data)
-        setFound(true)
-        return data
+        }, handleData)
     }
 
     const updateMyRecipesAuthor = () => {
+        getMyRecipes()
         myRecipes.documents.map(doc => {
-            axios.patch('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes/' + doc.name.split('/').pop() + '?updateMask.fieldPaths=author', {
-                fields: {
-                    author: { stringValue: username }
+            sendRequest({
+                url: 'https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes/' + doc.name.split('/').pop() + '?updateMask.fieldPaths=author',
+                method: 'patch',
+                data: {
+                    fields: {
+                        author: { stringValue: username }
+                    }
                 }
-            }, {
+            })
+        })
+        getMyRecipes()
+    }
+
+    const deleteRecipe =  (recipeId) => {
+        axios.delete(`https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes${recipeId}`,
+            {
                 headers: {
                     //insert idToken
                     Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('loginData')).idToken
                 }
+            }).finally(() => {
+                getMyRecipes()
             })
-        })
-
     }
+
 
     const inputHandler = (e, type) => {
         let input = e.target.value.replace(/ +(?= )/g, '');
@@ -112,6 +137,7 @@ const Profile = ({ loginData, setLoginData }) => {
         }
     }
 
+    console.log(myRecipes)
 
     return (
         <div className='create'>
@@ -129,12 +155,14 @@ const Profile = ({ loginData, setLoginData }) => {
                 <label style={{ color: theme.createLabelTextColor }}>Bio:
                     <textarea className='method-input' placeholder='Add bio' style={{ backgroundColor: theme.createInputBackgroundColor }} onChange={(e) => { inputHandler(e, 'bio') }} value={bio}></textarea>
                 </label>
-                <button type='submit' onClick={updateUser} className='submit-btn'>Update</button>
+                <button type='submit' onClick={updateUser} className='submit-btn'>{loading ? 'Updating...' : 'Update'}</button>
             </form>
             <h1 style={{ color: theme.createInputBackgroundColor }}>My recipes: </h1>
             <div className='wrapper'>
-                {found ? <RecipesList data={myRecipes} /> : <h1 className='noData'>No recipes found...</h1>}
-
+                {loading && <h1 className='noData'>Loading...</h1>}
+                {error && <h1 className='noData'>Error...</h1>}
+                {!loading && found && <RecipesList data={myRecipes} deleteFunct={deleteRecipe} />}
+                {!loading && !found && <h1 className='noData'>No recipes found...</h1>}
             </div>
         </div>
     )

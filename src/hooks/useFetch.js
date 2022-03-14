@@ -1,49 +1,61 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-const useFetch = (url, refresh, arrayOfObjects) => {
-  const [data, setData] = useState(null)
+const useFetch = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    if (arrayOfObjects != undefined) {
-      setLoading(true)
-      axios.post('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents:runQuery',
-        {
-          structuredQuery: {
-            from: [{ collectionId: 'recipes' }],
-            where: {
-              fieldFilter: {
-                field: {
-                  fieldPath: 'search'
-                },
-                op: 'ARRAY_CONTAINS_ANY',
-                value: { arrayValue: { values: [arrayOfObjects] } }
-              }
-            }
-          }
-        }
-      ).then((response) => {
-        setData(response.data)
-      }).catch((err) => {
-        setError(err)
-      }).finally(() => {
-        setLoading(false)
-      })
-    } else {
-      setLoading(true)
-      axios.get(url).then((response) => {
-        setData(response.data)
-      }).catch((err) => {
-        setError(err)
-      }).finally(() => {
-        setLoading(false)
-      })
-    }
-  }, [url, refresh])
+  const sendRequest = useCallback(async (requestConfig, callback = ()=>{}) => {
+    setLoading(false)
+    setError(null)
+    let header = ''
 
-  return { data, loading, error }
+    //if user not logged in dont use auth in header
+    if(JSON.parse(localStorage.getItem('loginData')) != undefined) {
+      header = {
+        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('loginData')).idToken
+      }
+    }
+
+    try {
+      setLoading(true)
+
+      const response = await axios(requestConfig.url, {
+        method: requestConfig.method ? requestConfig.method : 'get',
+        data: requestConfig.data ? requestConfig.data : null,
+        headers: header
+      })
+
+      const data = await response.data
+      callback(data)
+
+    } catch (e) {
+      setError(e)
+      console.log(e)
+    }
+    setLoading(false)
+  }, [])
+
+  return { loading, error, sendRequest }
 };
 
 export default useFetch;
+
+
+
+
+
+
+
+
+//old
+// useEffect(() => {
+  //   setLoading(true)
+  //   axios.get(url).then((response) => {
+  //     setData(response.data)
+  //   }).catch((err) => {
+  //     setError(err)
+  //   }).finally(() => {
+  //     setLoading(false)
+  //   })
+  // }, [url])
