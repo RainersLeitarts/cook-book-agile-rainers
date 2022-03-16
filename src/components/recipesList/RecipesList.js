@@ -8,7 +8,6 @@ const RecipesList = ({ data, deleteFunct }) => {
   
   useEffect(()=>{
     setRecipeData(data)
-    console.log(data)
   }, [data])
 
   const navigator = useNavigate()

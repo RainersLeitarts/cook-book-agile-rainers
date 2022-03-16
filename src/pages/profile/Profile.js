@@ -163,7 +163,7 @@ const Profile = ({ loginData, setLoginData }) => {
                 {loading && <h1 className='noData'>Loading...</h1>}
                 {error && <h1 className='noData'>Error...</h1>}
                 {!loading && found && <RecipesList data={myRecipes} deleteFunct={deleteRecipe} />}
-                {!loading && !found && <h1 className='noData'>No recipes found...</h1>}
+                {!loading && !found && <h1 className='noData' style={{ color: theme.createInputBackgroundColor }}>No recipes found...</h1>}
             </div>
         </div>
     )

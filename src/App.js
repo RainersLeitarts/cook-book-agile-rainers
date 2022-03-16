@@ -120,7 +120,7 @@ function App() {
           })}
         </div>
         <button className={theme.name + ' toggle-button'} onClick={toggleTheme}>{theme.name}</button>
-        <button className={'random toggle-button'} onClick={toggleRandomTheme}>{'🎨'}</button>
+        <button className={'random toggle-button'} style={{marginLeft: '0.2rem', backgroundColor: theme.backgroundColorCard}} onClick={toggleRandomTheme}>{'🎨'}</button>
       </div>
       <Routes>
         <Route path='/' element={<Home />} />

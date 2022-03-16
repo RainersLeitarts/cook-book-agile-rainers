@@ -18,7 +18,9 @@ const Edit = ({loginData}) => {
     useEffect(()=>{
         sendRequest(
             {url: `https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes/${id}`}
-            , (data)=>{setData(data)})
+            , (data)=>{
+                console.log(data)
+                setData(data)})
     },[])
 
     //checks if logged in user is the author of the recipe if false notifies user
