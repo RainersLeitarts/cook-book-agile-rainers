@@ -8,16 +8,19 @@ const Search = () => {
   const [search] = useSearchParams()
   const [recipes, setRecipes] = useState()
 
+  //search params are used
   const searchTerms = search.get('q').toLowerCase().trim().split(' ')
-
+  
   const {loading, error, sendRequest: fetchRecipes} = useFetch()
 
 
   useEffect(()=>{
+    //updates state with data fetched
     const getRecipes = (recipeData) => {
       setRecipes(recipeData)
     }
 
+    //useFetch to fetch recipes
     fetchRecipes({url: 'https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/recipes'}, getRecipes)
   }, [search])
 

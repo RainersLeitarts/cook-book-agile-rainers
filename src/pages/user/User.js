@@ -14,12 +14,11 @@ const User = () => {
 
     const [{ theme }] = useContext(ThemeContext)
 
-    console.log(theme)
-
     useEffect(() => {
         getUserData()
     }, [])
 
+    //get user data
     const getUserData = async () => {
         setLoading(true)
         const userDataRes = await axios.get('https://firestore.googleapis.com/v1/projects/cookboook-1a8ba/databases/(default)/documents/users/' + id)
@@ -52,25 +51,35 @@ const User = () => {
             return document.document
         })
         data = { documents: temp }
-        //setUserRecipes(data)
-
         setUserRecipes(data)
         console.log(data)
         setLoading(false)
     }
 
-   
+    //Displays 'FullName' aka 'Username' in user profile view if fullname != username
+    const AkaUsername = ({fullname, username}) => {
+        if (fullname !== username) {
+            return <div style={{ color: theme.createLabelTextColor }} className='username-wrapper'>
+                <p style={{ color: theme.cardTitleTextColor }} className='fullname'>{fullname}</p>
+                <p style={{ color: theme.cardTitleTextColor, marginLeft: '0.5rem', marginRight: '0.5rem' }}>aka</p>
+                <p style={{ color: theme.cardTitleTextColor }} className='username'>{username}</p>
+            </div>
+        } else { 
+            return <div style={{ color: theme.createLabelTextColor }} className='username-wrapper'>
+                <p style={{ color: theme.cardTitleTextColor }} className='fullname'>{fullname}</p>
+            </div>
+        }
+    }
+
 
     return (<div className='wrapper'>
-        {loading? <h1>Loading...</h1> : (<div><div style={{color: theme.createLabelTextColor}} className='username-wrapper'>
-            <p style={{ color: theme.cardTitleTextColor }} className='fullname'>{userData.fields?.fullname.stringValue}</p>
-            <p style={{color: theme.cardTitleTextColor, marginLeft: '0.5rem', marginRight: '0.5rem'}}>aka</p>
-            <p style={{ color: theme.cardTitleTextColor }} className='username'>{userData.fields?.username.stringValue}</p>
+        {loading ? <h1>Loading...</h1> : (<div><div className='user-card' style={{ backgroundColor: theme.backgroundColorCard }}>
+            <AkaUsername fullname={userData.fields?.fullname.stringValue} username={userData.fields?.username.stringValue}/>
+            <h1 style={{ color: theme.cardTitleTextColor }} className='email'>Email: {userData.fields?.email.stringValue}</h1>
+            <h1 style={{ color: theme.cardTitleTextColor }} className='bio'>Bio: {userData.fields?.bio?.stringValue ? userData.fields?.bio?.stringValue : 'user hasn\'t added bio'}</h1>
         </div>
-        <h1 style={{ color: theme.cardTitleTextColor }} className='email'>Email: {userData.fields?.email.stringValue}</h1>
-        <h1 style={{ color: theme.cardTitleTextColor }} className='bio'>Bio: {userData.fields?.bio?.stringValue? userData.fields?.bio?.stringValue: 'user hasn\'t added bio'}</h1>
-        <h1 style={{ color: theme.cardTitleTextColor }} className='user-recipes'>{userData.fields?.username.stringValue + '\'s recipes:'}</h1>
-        <div>{userRecipes ? <RecipesList data={userRecipes} /> : console.log("no data")}</div></div>)}
+            <h1 style={{ color: theme.cardTitleTextColor }} className='user-recipes'>{userData.fields?.username.stringValue + '\'s recipes:'}</h1>
+            <div>{userRecipes ? <RecipesList data={userRecipes} /> : console.log("no data")}</div></div>)}
     </div>
     )
 }

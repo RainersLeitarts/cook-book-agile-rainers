@@ -10,7 +10,6 @@ const Recipe = () => {
 
   const [data, setData] = useState()
   const { loading, error, sendRequest } = useFetch()
-  let ingredients = ''
 
   useEffect(() => {
     sendRequest(
@@ -18,22 +17,23 @@ const Recipe = () => {
       , (data) => { setData(data) })
   }, [])
 
-  const showIngredients = (recipeData) => {
+  //Ingredients component
+  const Ingredients = ({recipeData}) => {
     let ingredientArr = []
   
     recipeData?.map(item => {
       ingredientArr.push(item.stringValue)
     })
   
-    return ingredientArr.join(', ')
+    return <h3 className='ingredients' style={{ color: theme.recipeCardIngredientsTextColor }}>{ ingredientArr.join(', ') }</h3>
   }
 
-  data? ingredients = showIngredients(data.fields.ingredients.arrayValue.values) : console.log('no data')
+  //data? ingredients = showIngredients(data.fields.ingredients.arrayValue.values) : console.log('no data')
 
   const recipeCard = () => {
     return <div className='single-recipe-card' style={{ backgroundColor: theme.recipeBackgroundColorCard }}>
       <h1 className='recipe-title' style={{ color: theme.recipeCardTitleTextColor }}>{data.fields.title.stringValue}</h1>
-      <h3 className='ingredients' style={{ color: theme.recipeCardIngredientsTextColor }}>{ ingredients }</h3>
+      <Ingredients recipeData={data.fields.ingredients.arrayValue.values}/>
       <h3 className='cooking-time' style={{ color: theme.recipeCardTimeTextColor }}>{`${data.fields.cookingTime.stringValue} to make.`}</h3>
       <p className='single-cooking-method' style={{ color: theme.recipeCardMethodTextColor }}>{data.fields.method.stringValue}</p>
     </div>
