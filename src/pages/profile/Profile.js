@@ -63,8 +63,6 @@ const Profile = ({ loginData, setLoginData }) => {
             })
             data = { documents: temp }
 
-            if (data == {}) console.log('true')
-
             setMyRecipes(data)
             setFound(true)
         }
@@ -137,9 +135,7 @@ const Profile = ({ loginData, setLoginData }) => {
                 break;
         }
     }
-
-    console.log(myRecipes)
-
+    
     return (
         <div className='create'>
             <h2 style={{ color: theme.createTitleTextColor }}>{fullname}</h2>

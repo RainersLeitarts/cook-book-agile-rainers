@@ -6,7 +6,7 @@ import Home from './pages/home/Home';
 import Create from './pages/create/Create';
 import Search from './pages/search/Search';
 import Recipe from './pages/recipe/Recipe';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ThemeContext, navBarColors } from './hooks/useTheme';
 import ProtectedRoutes from './components/protectedRoutes/ProtectedRoutes';
 import Profile from './pages/profile/Profile';
@@ -29,6 +29,23 @@ function App() {
       ? JSON.parse(localStorage.getItem('loginData'))
       : null
   )
+
+  useEffect(() => {
+    if (localStorage.getItem('loginData') == undefined) return
+
+    let refreshToken = JSON.parse(localStorage.getItem('loginData')).refreshToken
+
+    axios('https://securetoken.googleapis.com/v1/token?key=AIzaSyCIZb64X0COxqbpAITwN08mxsf-8l4RghA', {
+      method: 'post',
+      data: `grant_type=refresh_token&refresh_token=${refreshToken}`,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).then(res => {
+      setLoginData((prevData) => {
+        setLoginData({ ...prevData, idToken: res.data.id_token, refreshToken: res.data.refresh_token })
+      })
+      localStorage.setItem('loginData', JSON.stringify({ ...JSON.parse(localStorage.getItem('loginData')), idToken: res.data.id_token, refreshToken: res.data.refresh_token }));
+    })
+  }, [])
 
   //handles login Failure
   const handleFailure = (result) => {
@@ -85,7 +102,7 @@ function App() {
   const handleSuccess = async (googleData) => {
     //post request to authorize in firebase with Idp, Google login tokenId must be provided
     const res = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
-    {"postBody":`id_token=${googleData.tokenId}&providerId=google.com`,"requestUri":"https://cookbook-agile-rewidle.herokuapp.com","returnIdpCredential":true,"returnSecureToken":true}
+      { "postBody": `id_token=${googleData.tokenId}&providerId=google.com`, "requestUri": "https://cookbook-agile-rewidle.herokuapp.com", "returnIdpCredential": true, "returnSecureToken": true }
     )
 
     const data = res.data;
@@ -96,9 +113,9 @@ function App() {
     let id = profileData.name.split('/').pop()
 
     //sets LoginData state with all of the users information
-    setLoginData({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue});
+    setLoginData({ ...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue });
     //stores LoginData in LocalStorage
-    localStorage.setItem('loginData', JSON.stringify({...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue}));
+    localStorage.setItem('loginData', JSON.stringify({ ...data, id: id, fullname: profileData.fields.fullname.stringValue, username: profileData.fields.username.stringValue, bio: profileData.fields.bio?.stringValue }));
   }
 
   //handles logout
@@ -120,18 +137,18 @@ function App() {
           })}
         </div>
         <button className={theme.name + ' toggle-button'} onClick={toggleTheme}>{theme.name}</button>
-        <button className={'random toggle-button'} style={{marginLeft: '0.2rem', backgroundColor: theme.backgroundColorCard}} onClick={toggleRandomTheme}>{'🎨'}</button>
+        <button className={'random toggle-button'} style={{ marginLeft: '0.2rem', backgroundColor: theme.backgroundColorCard }} onClick={toggleRandomTheme}>{'🎨'}</button>
       </div>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route element={<ProtectedRoutes isAuthorised={loginData ? true : false} />}>
           <Route path='/create' element={<Create loginData={loginData} />} />
-          <Route path='/profile' element={<Profile loginData={loginData} setLoginData={setLoginData}/>} />
-          <Route path='/edit/:id' element={<Edit loginData={loginData}/>}/>
+          <Route path='/profile' element={<Profile loginData={loginData} setLoginData={setLoginData} />} />
+          <Route path='/edit/:id' element={<Edit loginData={loginData} />} />
         </Route>
         <Route path='/search' element={<Search />} />
         <Route path='/recipe/:id' element={<Recipe />} />
-        <Route path='/user/:id' element={<User/>}/>
+        <Route path='/user/:id' element={<User />} />
       </Routes>
     </Router>
   );

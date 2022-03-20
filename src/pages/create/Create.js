@@ -37,14 +37,12 @@ const Create = ({ loginData, edit, editData }) => {
   const handleSubmit = (e) => {
     //prevents page reload
     e.preventDefault()
-    console.log(ingredients)
     //checks if any of the fields are empty if true form is not submited
     if (title.trim() === '' || ingredients.length === 0 || method.trim() === '' || time === '') return
     //each word from title and method is put into search keyword array for search
     let search = title.trim() + ' ' + method.trim()
 
     let tempIngredients = ingredients.map(item => {
-      console.log(item)
       return item = { stringValue: item }
     })
 
@@ -147,8 +145,6 @@ const Create = ({ loginData, edit, editData }) => {
     tempIngredients = tempIngredients.filter(function (item) {
       return item !== e.target.innerText
     })
-
-    console.log(tempIngredients)
 
     setIngredients(tempIngredients)
   }
